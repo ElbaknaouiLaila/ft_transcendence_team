@@ -12,5 +12,8 @@ export declare class AuthController {
     GenerateQrCode(req: any): Promise<any>;
     Verify_QrCode(body: any, req: any): Promise<string>;
     Insert_Friends(body: any, req: any): Promise<void>;
-    Get_FriendsList(req: any): Promise<void>;
+    Get_FriendsList(req: any): Promise<{
+        FriendList: {};
+    }>;
+    only_friends(req: any): Promise<any[]>;
 }

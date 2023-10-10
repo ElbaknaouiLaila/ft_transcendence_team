@@ -92,10 +92,10 @@ export class AuthController {
     async Get_FriendsList(@Req() req){
 
       const decoded = this.jwt.verify(req.cookies['cookie']);
-      const user = await this.prisma.user.findUnique({where:{id_user : decoded.id},});
+      const user = await this.prisma.user.findUnique({where:{id_user : decoded.id_user},});
 
       const friends = await this.prisma.user.findUnique({
-        where:{id_user : decoded.id},
+        where:{id_user : decoded.id_user},
         include: {
           freind: {
               select: {id_freind :true},
@@ -105,7 +105,7 @@ export class AuthController {
 
       const obj = friends.freind;
       let FriendList = {};
-      
+
       const idFriends = obj.map((scope => scope.id_freind));
       for (const num of idFriends){
         // console.log(num);
@@ -116,7 +116,40 @@ export class AuthController {
         FriendList = { name : OneFriend};
       }
       const WantedObj = {AccountOwner: user, FriendList}; 
-      console.log(WantedObj);
-      
+      const scoop = {FriendList};
+      console.log(scoop);
+      return (scoop);
+    }
+
+    @Get('friends')
+    async only_friends(@Req() req){
+
+      const decoded = this.jwt.verify(req.cookies['cookie']);
+      // const user = await this.prisma.user.findUnique({where:{id_user : decoded.id_user},});
+
+      const friends = await this.prisma.user.findUnique({
+        where:{id_user : decoded.id_user},
+        include: {
+          freind: {
+              select: {id_freind :true},
+          }
+        }
+      });
+      const obj = friends.freind;
+      const idFriends = obj.map((scope => scope.id_freind));
+
+      let array: any[] = [];
+
+      for (const num of idFriends){
+        // console.log(num);
+        const OneFriend = await this.prisma.user.findUnique({
+          where: {id_user: num},
+        });
+        // console.log(OneFriend);
+        array.push(OneFriend);
+      }
+      console.log(array);
+      return array;
+
     }
 }

@@ -58,9 +58,9 @@ let AuthController = class AuthController {
     }
     async Get_FriendsList(req) {
         const decoded = this.jwt.verify(req.cookies['cookie']);
-        const user = await this.prisma.user.findUnique({ where: { id_user: decoded.id }, });
+        const user = await this.prisma.user.findUnique({ where: { id_user: decoded.id_user }, });
         const friends = await this.prisma.user.findUnique({
-            where: { id_user: decoded.id },
+            where: { id_user: decoded.id_user },
             include: {
                 freind: {
                     select: { id_freind: true },
@@ -78,7 +78,31 @@ let AuthController = class AuthController {
             FriendList = { name: OneFriend };
         }
         const WantedObj = { AccountOwner: user, FriendList };
-        console.log(WantedObj);
+        const scoop = { FriendList };
+        console.log(scoop);
+        return (scoop);
+    }
+    async only_friends(req) {
+        const decoded = this.jwt.verify(req.cookies['cookie']);
+        const friends = await this.prisma.user.findUnique({
+            where: { id_user: decoded.id_user },
+            include: {
+                freind: {
+                    select: { id_freind: true },
+                }
+            }
+        });
+        const obj = friends.freind;
+        const idFriends = obj.map((scope => scope.id_freind));
+        let array = [];
+        for (const num of idFriends) {
+            const OneFriend = await this.prisma.user.findUnique({
+                where: { id_user: num },
+            });
+            array.push(OneFriend);
+        }
+        console.log(array);
+        return array;
     }
 };
 exports.AuthController = AuthController;
@@ -135,6 +159,13 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "Get_FriendsList", null);
+__decorate([
+    (0, common_1.Get)('friends'),
+    __param(0, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "only_friends", null);
 exports.AuthController = AuthController = __decorate([
     (0, common_1.Controller)('auth'),
     __metadata("design:paramtypes", [auth_service_1.AuthService,
