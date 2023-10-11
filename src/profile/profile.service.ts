@@ -9,25 +9,21 @@ export class ProfileService {
     constructor(private prisma: PrismaService, private jwt:JwtService){}
 
     async ModifyName(dat :any, req :any, res :any){
-        // const Token = req.cookies['cookie'];
-        // const verifyToekn = this.jwt.verify(Token);
+        
+        const Token = req.cookies['cookie'];
+        const verifyToekn = this.jwt.verify(Token);
         // console.log(verifyToekn);
-        // const name = verifyToekn.name;
-        const name = 'Ayour'
-        const newName = dat.name;
-        // console.log('naaame ' + name);
         try{
             await this.prisma.user.update({
-                where: {name},
+                where: {name : verifyToekn.name},
                 data: {
-                    name : newName,
+                    name : dat.name,
                 },
             });
            
-            const userInfos = this.jwt.verify(req.cookies['cookie']);
-            userInfos.name = newName;
+            verifyToekn.name = dat.name;
             // console.log(userInfos);
-            res.cookie('cookie', this.jwt.sign(userInfos));
+            res.cookie('cookie', this.jwt.sign(verifyToekn));
 
         }catch(error){
             if (error.code == 'P2002')
@@ -37,24 +33,21 @@ export class ProfileService {
 
     async ModifyPhoto(photo:any, req:any, res:any) {
 
-        // const verifyToken = this.jwt.verify(req.cookies['cookie']);
-        // const name = verifyToken.name;
-        const name =  'mmanouze';
-        const filePath = '/nfs/homes/mmanouze/Desktop/oauth-42-project/uploads/' + photo.originalname; // Use the original name or generate a unique name
+        const verifyToken = this.jwt.verify(req.cookies['cookie']);
+        const filePath = '/Users/mmanouze/Desktop/oauth-42-project/uploads/' + photo.originalname; // Use the original name or generate a unique name
         fs.writeFileSync(filePath, photo.buffer);
 
         try{
             await this.prisma.user.update({
-                where: {name},
+                where: {name : verifyToken.name},
                 data: {
                     avatar : filePath,
                 },
             });
 
-            const userInfos = this.jwt.verify(req.cookies['cookie']);
-            userInfos.avatar = filePath;
+            verifyToken.avatar = filePath;
             // console.log(userInfos);
-            res.cookie('cookie', this.jwt.sign(userInfos));
+            res.cookie('cookie', this.jwt.sign(verifyToken));
         }catch(error){
             console.log(error);
             // if (error.code == 'P2002')

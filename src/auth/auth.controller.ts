@@ -34,7 +34,8 @@ export class AuthController {
 
       const accessToken = this.jwt.sign(req.user);
       res.cookie('cookie', accessToken/*, { maxage: 99999 , secure: false}*/).status(200);
-      res.send('cookie well setted');
+      // res.send('cookie well setted');
+      res.redirect('http://localhost:3001/setting');
 
       return (req);
     }
@@ -46,6 +47,21 @@ export class AuthController {
     getSessionToken(@Req() req) {
       const sessionToken = this.jwt.verify(req.cookies['cookie']);
       return `Session Token: ${sessionToken}`;
+    }
+
+    /************************************** */
+
+    @Get('enable-Twofactor')
+    async enableTwoFactor(@Req() req){
+
+      const decoded = this.jwt.verify(req.cookies['cookie']);
+      const user = await this.prisma.user.update({
+        where: {id_user: decoded.id_user},
+        data: {
+          TwoFactor: true,
+        },
+      });
+
     }
 
     /************************************** */

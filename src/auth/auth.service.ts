@@ -69,15 +69,14 @@ export class AuthService {
               /* 98853 mmanouze */
       // console.log(body);
     //   const { code } = body;
-      // const decoded = this.jwt.verify(body.cookie);
-      const user =  await this.prisma.user.findUnique({where: {id_user: 98853}});
+      const decoded = this.jwt.verify(body.cookie);
+      const user =  await this.prisma.user.findUnique({where: {id_user: decoded.id_user}});
       // const user = await this.prisma.user.findUnique({where: {id_user: decoded.id}});
-        console.log(user);
+        // console.log(user);
       if (authenticator.verify({token:body.code, secret: user.secretKey}))
         return ({msg: 'code is true ,you are permitted to pass'});
       else
         return ({msg: 'code ghalt ,ghayrha akhouya chwiya'});
-
     }
 
 }
