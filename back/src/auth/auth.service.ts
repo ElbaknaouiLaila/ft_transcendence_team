@@ -25,8 +25,8 @@ export class AuthService {
             });
             if (find)
             {
-                // if (find.TwoFactor)
-                //     res.redirect('http://localhost:3000/auth/get-qrcode');
+                if (find.TwoFactor)
+                    res.redirect('http://localhost:3000/auth/get-qrcode');
                 // console.log('when we found the user in the data base');
                 // console.log(find);
                 return find;
@@ -58,25 +58,35 @@ export class AuthService {
         });
         console.log(user);
         const otpAuthURL = authenticator.keyuri(decoded.email, 'YourAppName', sKey);
-  
-        const qrCodeDataURL =  qrcode.toDataURL(otpAuthURL);
+        
+        const qrCodeOptions = {
+            errorCorrectionLevel: 'L', // You can customize this option as needed
+            width: 250, // Specify the desired width
+            height: 250, // Specify the desired height
+            margin: 1,
+            color: {
+                dark: "#3D3C65",
+                light: "#B7B7C9"
+            }
+        };
+
+        const qrCodeDataURL =  qrcode.toDataURL(otpAuthURL, qrCodeOptions);
         
         return qrCodeDataURL;
     }
-
 
     async Verify_QrCode(body:any, req:any){
               /* 98853 mmanouze */
       // console.log(body);
     //   const { code } = body;
-      const decoded = this.jwt.verify(body.cookie);
-      const user =  await this.prisma.user.findUnique({where: {id_user: decoded.id_user}});
+      const decoded = this.jwt.verify(req.cookies['cookie']);
+      const user =  await this.prisma.user.findUnique({where: {id_user: decoded.id}});
       // const user = await this.prisma.user.findUnique({where: {id_user: decoded.id}});
         // console.log(user);
-      if (authenticator.verify({token:body.code, secret: user.secretKey}))
-        return ({msg: 'code is true ,you are permitted to pass'});
+      if (authenticator.verify({token:body.inputValue, secret: user.secretKey}))
+        return ({msg: 'true'});
       else
-        return ({msg: 'code ghalt ,ghayrha akhouya chwiya'});
+        return ({msg: 'false'});
     }
 
 }
