@@ -51,21 +51,6 @@ export class AuthController {
 
     /************************************** */
 
-    @Get('enable-Twofactor')
-    async enableTwoFactor(@Req() req){
-
-      const decoded = this.jwt.verify(req.cookies['cookie']);
-      const user = await this.prisma.user.update({
-        where: {id_user: decoded.id_user},
-        data: {
-          TwoFactor: true,
-        },
-      });
-
-    }
-
-    /************************************** */
-
     @Get('get-qrcode')
     async GenerateQrCode(@Req() req){
       const qrCodeDataURL = await this.service.GenerateQrCode(req);
@@ -104,6 +89,10 @@ export class AuthController {
       });
     }
 
+
+    /************************************** */
+
+
     @Get('get-friendsList')
     async Get_FriendsList(@Req() req){
 
@@ -137,6 +126,10 @@ export class AuthController {
       return (scoop);
     }
 
+
+    /************************************** */
+
+
     @Get('friends')
     async only_friends(@Req() req){
 
@@ -167,5 +160,36 @@ export class AuthController {
       console.log(array);
       return array;
 
+    }
+
+    /************************************** */
+
+    @Get('get-user')
+    // @UseGuards(JwtAuthGuard)
+    async Get_User(@Req() req){
+
+      const decoded = this.jwt.verify(req.cookies['cookie']);
+      // console.log(req.cookies['cookie']);
+
+      console.log(decoded);
+      let obj: any[] = []
+      const user = await this.prisma.user.findUnique({where:{id_user : decoded.id},});
+      obj.push(user);
+      return obj;
+    }
+
+    /************************************** */
+
+
+    @Post('TwoFactorAuth')
+    async TwofactorAuth(@Body() body, @Req() req){
+
+      const decoded = this.jwt.verify(req.cookies['cookie']);
+      const user = await this.prisma.user.update({
+        where : {id_user : decoded.id},
+        data :{
+          TwoFactor: body.TwoFactor,
+        },
+      });
     }
 }
