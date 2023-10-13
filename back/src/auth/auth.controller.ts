@@ -30,12 +30,23 @@ export class AuthController {
 
     @Get('login/42/redirect')
     @UseGuards(AuthGuard('42'))
-    redirect(@Req() req:any, @Res() res:any){
+    async redirect(@Req() req:any, @Res() res:any){
 
       const accessToken = this.jwt.sign(req.user);
+      // console.log(req.user);
       res.cookie('cookie', accessToken/*, { maxage: 99999 , secure: false}*/).status(200);
-      // res.send('cookie well setted');
-      res.redirect('http://localhost:3001/setting');
+      const user = await this.prisma.user.findUnique({
+        where : {id_user: req.user.id},
+      });
+      if (user.TwoFactor){
+        res.redirect('http://localhost:3001/Authentication');
+        return (req);
+      }
+      if (user.IsFirstTime)
+        res.redirect('http://localhost:3001/setting');
+      else
+        res.redirect('http://localhost:3001/home');
+        // res.send('cookie well setted');
 
       return (req);
     }
@@ -73,16 +84,15 @@ export class AuthController {
     @Post('add-friends')
     async Insert_Friends(@Body() body, @Req() req){
 
-      // const finduser = await this.prisma.
-      // const finduser = await this.prisma.user.findUnique({where:{name:'lelbakna'}});
-    
+      const decoded = this.jwt.verify(req.cookies['cookie']);
+
       const user = await this.prisma.user.update({
-        where: {id_user: 98853},
+        where: {id_user: 98853/*decoded.id*/},
         data: {
           freind:{
             create:{
-              name : body.friend,
-              id_freind: 90240,
+              name : body.name,
+              id_freind: 2002/* body.friend_id */,
             },
           },
         },
@@ -93,14 +103,36 @@ export class AuthController {
     /************************************** */
 
 
+    @Get('remove-friends')
+    async Remove_friends(@Body() Body, @Req() req){
+
+      // const friendData = await this.prisma.user.findUnique({where: {name: Body.name}});
+      const decoded = this.jwt.verify(req.cookies['cookie']);
+      console.log(decoded);
+      const user = await this.prisma.freind.deleteMany({
+        where: {
+          AND: [
+            {userId: decoded.id},
+            {id_freind: 2002 /*friendData.id_user*/},
+          ] // leila needs to store the id of every single friend to use em when 
+            // when removing some one from a user's data base
+         },
+      })
+      // console.log(user);
+    }
+
+
+    /************************************** */
+
+
     @Get('get-friendsList')
     async Get_FriendsList(@Req() req){
 
       const decoded = this.jwt.verify(req.cookies['cookie']);
-      const user = await this.prisma.user.findUnique({where:{id_user : decoded.id_user},});
+      const user = await this.prisma.user.findUnique({where:{id_user : decoded.id},});
 
       const friends = await this.prisma.user.findUnique({
-        where:{id_user : decoded.id_user},
+        where:{id_user : decoded.id},
         include: {
           freind: {
               select: {id_freind :true},
@@ -134,10 +166,10 @@ export class AuthController {
     async only_friends(@Req() req){
 
       const decoded = this.jwt.verify(req.cookies['cookie']);
-      // const user = await this.prisma.user.findUnique({where:{id_user : decoded.id_user},});
+      // const user = await this.prisma.user.findUnique({where:{id_user : decoded.id},});
 
       const friends = await this.prisma.user.findUnique({
-        where:{id_user : decoded.id_user},
+        where:{id_user : decoded.id},
         include: {
           freind: {
               select: {id_freind :true},
@@ -184,11 +216,11 @@ export class AuthController {
     @Post('TwoFactorAuth')
     async TwofactorAuth(@Body() body, @Req() req){
 
-      const decoded = this.jwt.verify(req.cookies['cookie']);
+      // const decoded = this.jwt.verify(req.cookies['cookie']);
       const user = await this.prisma.user.update({
-        where : {id_user : decoded.id},
+        where : {id_user : 98853 /*decoded.id*/},
         data :{
-          TwoFactor: body.TwoFactor,
+          TwoFactor: true/*body.TwoFactor*/,
         },
       });
     }

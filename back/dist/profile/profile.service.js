@@ -20,18 +20,17 @@ let ProfileService = class ProfileService {
         this.jwt = jwt;
     }
     async ModifyName(dat, req, res) {
-        const name = 'Ayour';
-        const newName = dat.name;
+        const Token = req.cookies['cookie'];
+        const verifyToekn = this.jwt.verify(Token);
         try {
             await this.prisma.user.update({
-                where: { name },
+                where: { name: verifyToekn.name },
                 data: {
-                    name: newName,
+                    name: dat.name,
                 },
             });
-            const userInfos = this.jwt.verify(req.cookies['cookie']);
-            userInfos.name = newName;
-            res.cookie('cookie', this.jwt.sign(userInfos));
+            verifyToekn.name = dat.name;
+            res.cookie('cookie', this.jwt.sign(verifyToekn));
         }
         catch (error) {
             if (error.code == 'P2002')
@@ -39,19 +38,18 @@ let ProfileService = class ProfileService {
         }
     }
     async ModifyPhoto(photo, req, res) {
-        const name = 'mmanouze';
-        const filePath = '/nfs/homes/mmanouze/Desktop/oauth-42-project/uploads/' + photo.originalname;
+        const verifyToken = this.jwt.verify(req.cookies['cookie']);
+        const filePath = '/Users/mmanouze/Desktop/oauth-42-project/uploads/' + photo.originalname;
         fs.writeFileSync(filePath, photo.buffer);
         try {
             await this.prisma.user.update({
-                where: { name },
+                where: { name: verifyToken.name },
                 data: {
                     avatar: filePath,
                 },
             });
-            const userInfos = this.jwt.verify(req.cookies['cookie']);
-            userInfos.avatar = filePath;
-            res.cookie('cookie', this.jwt.sign(userInfos));
+            verifyToken.avatar = filePath;
+            res.cookie('cookie', this.jwt.sign(verifyToken));
         }
         catch (error) {
             console.log(error);

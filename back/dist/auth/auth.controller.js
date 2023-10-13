@@ -25,10 +25,20 @@ let AuthController = class AuthController {
         this.prisma = prisma;
     }
     Login() { }
-    redirect(req, res) {
+    async redirect(req, res) {
         const accessToken = this.jwt.sign(req.user);
         res.cookie('cookie', accessToken).status(200);
-        res.send('cookie well setted');
+        const user = await this.prisma.user.findUnique({
+            where: { id_user: req.user.id },
+        });
+        if (user.TwoFactor) {
+            res.redirect('http://localhost:3001/Authentication');
+            return (req);
+        }
+        if (user.IsFirstTime)
+            res.redirect('http://localhost:3001/setting');
+        else
+            res.redirect('http://localhost:3001/home');
         return (req);
     }
     getSessionToken(req) {
@@ -44,23 +54,36 @@ let AuthController = class AuthController {
         return (msg.msg);
     }
     async Insert_Friends(body, req) {
+        const decoded = this.jwt.verify(req.cookies['cookie']);
         const user = await this.prisma.user.update({
             where: { id_user: 98853 },
             data: {
                 freind: {
                     create: {
-                        name: body.friend,
-                        id_freind: 90240,
+                        name: body.name,
+                        id_freind: 2002,
                     },
                 },
             },
         });
     }
+    async Remove_friends(Body, req) {
+        const decoded = this.jwt.verify(req.cookies['cookie']);
+        console.log(decoded);
+        const user = await this.prisma.freind.deleteMany({
+            where: {
+                AND: [
+                    { userId: decoded.id },
+                    { id_freind: 2002 },
+                ]
+            },
+        });
+    }
     async Get_FriendsList(req) {
         const decoded = this.jwt.verify(req.cookies['cookie']);
-        const user = await this.prisma.user.findUnique({ where: { id_user: decoded.id_user }, });
+        const user = await this.prisma.user.findUnique({ where: { id_user: decoded.id }, });
         const friends = await this.prisma.user.findUnique({
-            where: { id_user: decoded.id_user },
+            where: { id_user: decoded.id },
             include: {
                 freind: {
                     select: { id_freind: true },
@@ -85,7 +108,7 @@ let AuthController = class AuthController {
     async only_friends(req) {
         const decoded = this.jwt.verify(req.cookies['cookie']);
         const friends = await this.prisma.user.findUnique({
-            where: { id_user: decoded.id_user },
+            where: { id_user: decoded.id },
             include: {
                 freind: {
                     select: { id_freind: true },
@@ -104,6 +127,22 @@ let AuthController = class AuthController {
         console.log(array);
         return array;
     }
+    async Get_User(req) {
+        const decoded = this.jwt.verify(req.cookies['cookie']);
+        console.log(decoded);
+        let obj = [];
+        const user = await this.prisma.user.findUnique({ where: { id_user: decoded.id }, });
+        obj.push(user);
+        return obj;
+    }
+    async TwofactorAuth(body, req) {
+        const user = await this.prisma.user.update({
+            where: { id_user: 98853 },
+            data: {
+                TwoFactor: true,
+            },
+        });
+    }
 };
 exports.AuthController = AuthController;
 __decorate([
@@ -120,7 +159,7 @@ __decorate([
     __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Object]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], AuthController.prototype, "redirect", null);
 __decorate([
     (0, common_1.Get)('get-session-token'),
@@ -153,6 +192,14 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "Insert_Friends", null);
 __decorate([
+    (0, common_1.Get)('remove-friends'),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "Remove_friends", null);
+__decorate([
     (0, common_1.Get)('get-friendsList'),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -166,6 +213,21 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "only_friends", null);
+__decorate([
+    (0, common_1.Get)('get-user'),
+    __param(0, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "Get_User", null);
+__decorate([
+    (0, common_1.Post)('TwoFactorAuth'),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "TwofactorAuth", null);
 exports.AuthController = AuthController = __decorate([
     (0, common_1.Controller)('auth'),
     __metadata("design:paramtypes", [auth_service_1.AuthService,
