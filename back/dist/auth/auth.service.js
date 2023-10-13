@@ -32,7 +32,8 @@ let AuthService = class AuthService {
                 where: { id_user },
             });
             if (find) {
-                return find;
+                const obj = { id: id, login: login, fullname: displayname, image: image.link, email: email };
+                return obj;
             }
             await this.prisma.user.create({
                 data: {
@@ -41,6 +42,7 @@ let AuthService = class AuthService {
                     avatar: image.link,
                     TwoFactor: false,
                     status_user: "online",
+                    IsFirstTime: false,
                 },
             });
             return obj;
@@ -58,16 +60,25 @@ let AuthService = class AuthService {
         });
         console.log(user);
         const otpAuthURL = otplib_1.authenticator.keyuri(decoded.email, 'YourAppName', sKey);
-        const qrCodeDataURL = qrcode.toDataURL(otpAuthURL);
+        const qrCodeOptions = {
+            errorCorrectionLevel: 'L',
+            width: 250,
+            height: 250,
+            margin: 1,
+            color: {
+                dark: "#3D3C65",
+                light: "#B7B7C9"
+            }
+        };
+        const qrCodeDataURL = qrcode.toDataURL(otpAuthURL, qrCodeOptions);
         return qrCodeDataURL;
     }
     async Verify_QrCode(body, req) {
         const user = await this.prisma.user.findUnique({ where: { id_user: 98853 } });
-        console.log(user);
-        if (otplib_1.authenticator.verify({ token: body.code, secret: user.secretKey }))
-            return ({ msg: 'code is true ,you are permitted to pass' });
+        if (otplib_1.authenticator.verify({ token: body.inputValue, secret: user.secretKey }))
+            return ({ msg: 'true' });
         else
-            return ({ msg: 'code ghalt ,ghayrha akhouya chwiya' });
+            return ({ msg: 'false' });
     }
 };
 exports.AuthService = AuthService;

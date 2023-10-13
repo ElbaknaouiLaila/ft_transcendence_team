@@ -8,13 +8,6 @@ export declare class FortyTwoStrategy extends FortyTwoStrategy_base {
     private prisma;
     constructor(authservice: AuthService, jwt: JwtService, prisma: PrismaService);
     validate(accessToken: string, refreshToken: string, profile: any, req: any, res: any): Promise<{
-        id_user: number;
-        name: string;
-        avatar: string;
-        TwoFactor: boolean;
-        secretKey: string;
-        status_user: string;
-    } | {
         id: any;
         login: any;
         fullname: any;

@@ -8,13 +8,6 @@ export declare class AuthService {
         msg: string;
     };
     ValidateUsers(infos: any, req: any, res: any): Promise<{
-        id_user: number;
-        name: string;
-        avatar: string;
-        TwoFactor: boolean;
-        secretKey: string;
-        status_user: string;
-    } | {
         id: any;
         login: any;
         fullname: any;

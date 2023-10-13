@@ -15,6 +15,7 @@ model User{
   name String  @unique
   avatar String?
   TwoFactor Boolean?
+  IsFirstTime Boolean?
   secretKey String?
   status_user String?
   stat Stat?

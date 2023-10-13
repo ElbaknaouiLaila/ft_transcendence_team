@@ -25,11 +25,13 @@ export class AuthService {
             });
             if (find)
             {
-                if (find.TwoFactor)
-                    res.redirect('http://localhost:3000/auth/get-qrcode');
+                // if (find.TwoFactor)
+                //     res.redirect('http://localhost:3000/auth/get-qrcode');
                 // console.log('when we found the user in the data base');
                 // console.log(find);
-                return find;
+                const obj = {id: id, login: login, fullname: displayname, image: image.link, email: email};
+
+                return obj;
             }
             await this.prisma.user.create({
                 data : {
@@ -38,6 +40,7 @@ export class AuthService {
                     avatar : image.link,
                     TwoFactor : false,
                     status_user: "online",
+                    IsFirstTime: false,
                 },
             });
             return obj;
@@ -79,8 +82,8 @@ export class AuthService {
               /* 98853 mmanouze */
       // console.log(body);
     //   const { code } = body;
-      const decoded = this.jwt.verify(req.cookies['cookie']);
-      const user =  await this.prisma.user.findUnique({where: {id_user: decoded.id}});
+    //   const decoded = this.jwt.verify(req.cookies['cookie']);
+      const user =  await this.prisma.user.findUnique({where: {id_user: 98853/*decoded.id*/}});
       // const user = await this.prisma.user.findUnique({where: {id_user: decoded.id}});
         // console.log(user);
       if (authenticator.verify({token:body.inputValue, secret: user.secretKey}))
