@@ -40,7 +40,7 @@ export class AuthService {
                     avatar : image.link,
                     TwoFactor : false,
                     status_user: "online",
-                    IsFirstTime: false,
+                    IsFirstTime: true,
                 },
             });
             return obj;

@@ -42,8 +42,10 @@ export class AuthController {
         res.redirect('http://localhost:3001/Authentication');
         return (req);
       }
-      if (user.IsFirstTime)
+      if (user.IsFirstTime){
+        await this.prisma.user.update({where : { id_user : req.user.id }, data: {IsFirstTime: false}});
         res.redirect('http://localhost:3001/setting');
+      }
       else
         res.redirect('http://localhost:3001/home');
         // res.send('cookie well setted');
