@@ -9,15 +9,23 @@ import { AiOutlineSearch } from "react-icons/ai";
 import axios from "axios";
 import { json } from "stream/consumers";
 import { useNavigate } from "react-router-dom";
+// type User = {
+//   id: number;
+//   email: string;
+//   username: string;
+//   name: {
+//     firstname: string;
+//     lastname: string;
+//   };
+// };
 type User = {
-  id: number;
-  email: string;
-  username: string;
-  name: {
-    firstname: string;
-    lastname: string;
+    id_user: number;
+    name: string;
+    avatar: string;
+    TwoFactor: boolean;
+    secretKey: string|null;
+    status_user: string;
   };
-};
 function SearchbarData() {
   const [query, setQuery] = useState("");
   const [users, setUsers] = useState<User[]>([]);
@@ -27,7 +35,10 @@ function SearchbarData() {
   const navigate = useNavigate();
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await axios.get("https://fakestoreapi.com/users");
+      // const { data } = await axios.get("https://fakestoreapi.com/users");
+      const { data } = await axios.get("http://localhost:3000/auth/friends", { withCredentials: true });
+      console.log("data");
+      // console.log(data);
       setUsers(data);
     };
     fetchData();
@@ -41,7 +52,8 @@ function SearchbarData() {
     setQuery(searchTerm);
 
     const filteredUsers = users.filter((user) =>
-      user.name.firstname.toLowerCase().includes(searchTerm)
+      // user.name.firstname.toLowerCase().includes(searchTerm)
+      user.name.toLowerCase().includes(searchTerm)
     );
 
     setSearchResults(filteredUsers);
@@ -64,13 +76,13 @@ function SearchbarData() {
         setQuery("");
         setSelectedUserIndex(-1);
         setSearchResults([]);
-        navigate(`/profileFriend/${selectedUser.id}`);
+        navigate(`/profileFriend/${selectedUser.id_user}`);
       }
     }
   }
   function handelUserClick(user: User) {
     // alert(`you selected ${user.name.firstname}`);
-    navigate(`/profileFriend/${user.id}`);
+    navigate(`/profileFriend/${user.id_user}`);
     setQuery("");
     setSelectedUserIndex(-1);
     setSearchResults([]);
@@ -118,10 +130,11 @@ function SearchbarData() {
                       className={`${
                         selectedUserIndex === index ? " bg-gray-300/30" : ""
                       } py-2 px-4 flex items-center justify-between gap-8 hover:bg-gray-300/30 cursor-pointer rounded-2xl`}
-                      key={user.id}
+                      key={user.id_user}
                       onClick={() => handelUserClick(user)}
                     >
-                      {user.name.firstname}
+                      {/* {user.name.firstname} */}
+                      {user.name}
                     </div>
                   </div>
                 ))}

@@ -16,7 +16,7 @@ export const datas = [
         id: 1,
         icon: <BiHomeAlt2/>,
         text: "Dashboard",
-        path: "/",
+        path: "/home",
     },
     {
         id: 2,
@@ -57,6 +57,7 @@ export const datas = [
         id: 7,
         icon: <FiLogOut/>,
         text: "Logout",
-        path: "/login",
+        path: "/login" || "/", //update
     },
+    
 ];

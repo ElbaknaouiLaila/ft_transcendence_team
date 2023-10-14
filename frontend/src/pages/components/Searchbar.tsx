@@ -12,7 +12,7 @@ function Searchbar() {
   // }
   return (
     <header className="flex items-center justify-between p-4 space-x-2 ">
-      <h1 className=" text-white text-3xl lg:ml-32 font-PalanquinDark font-bold">
+      <h1 className=" text-white text-3xl 2xl:text-4xl lg:ml-32 font-PalanquinDark font-bold">
         Ping Pong{" "}
       </h1>
       {/* <div className="hidden sm:block">

@@ -18,7 +18,8 @@ function Authentication(){
           initial="hidden"
           whileInView={"show"}
           viewport={{once:false, amount:0.7}}
-          className='relative justify-center flex flex-col m-12 space-y-8 w-200 max-h-52 pt-5 pb-4 bg-[#3b376041] shadow-2xl rounded-[40px] md:flex-row md:space-y-0 '>
+          // className='relative justify-center flex flex-col m-12 space-y-8 w-200 max-h-52 pt-5 pb-4 bg-[#3b376041] shadow-2xl rounded-[40px] md:flex-row md:space-y-0 '
+          >
             {/* <Login />    */}
             <Otpinput />
           </motion.div>

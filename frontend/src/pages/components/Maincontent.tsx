@@ -12,29 +12,34 @@ function Maincontent() {
   const [toggle, setToggle] = useState(false);
   return (
     <main className="overflow-scroll resultContainer flex flex-col w-full  overflow-x-hidden overflow-y-auto mb-14">
-      <div className="flex w-full mx-auto px-6  ">
-        <div className="flex flex-col w-full h-full text-gray-900 text-xl">
-          <div className="flex w-full h-full text-gray-900 text-xl space-x-0 lg:space-x-20 flex-col xl:flex-row">
+      <div className="flex w-full mx-auto pr-6  ">
+        <div className="flex flex-col w-full h-full text-gray-900 text-xl lg-laptop:mr-20">
+          <div className="flex w-full h-full text-gray-900 text-xl space-x-0 lg-laptop:space-x-32 laptop:ml-3 flex-col lg-laptop:flex-row mt-0 2xl:mt-20">
             <motion.div
               variants={fadeIn("down", 0.2)}
               initial="hidden"
               whileInView={"show"}
               viewport={{ once: false, amount: 0.7 }}
-              className="flex w-full  min-w-[40%] lg:max-w-[60%] h-96 pl-2 lg:pl-10 pt-10 mt-10 rounded-[46px] mx-auto bg-gradient-to-tr from-[#2A2742] via-[#3f3a5f] to-[#2A2742] shadow-2xl"
+              className="flex w-full  h-96 pl-2 lg:pl-10 pt-10 mt-10 rounded-[46px] lg-laptop:ml-32  mx-auto bg-gradient-to-tr from-[#2A2742] via-[#3f3a5f] to-[#2A2742] shadow-2xl"
             >
               <div className="flex flex-col text-white">
-                <p className="w-auto text-stone-300 text-xs font-normal ">
+              <img
+                className=" xl:ml-auto  mobile:block mobile:ml-14 mobile:-mt-14  mobile:max-w-[100%]  laptop:hidden tablet:hidden tablet:max-w-[70%]"
+                src={Group}
+                alt=""
+              />
+                <p className=" flex mobile:text-center p-2 tablet:text-left  w-auto text-stone-300 text-xs font-normal ">
                   FREE-TO-PLAY . PLAY-TO-EARN
                 </p>
-                <h1 className="font-Lemon text-2xl lg:text-[50px] w-[30px] leading-[40px] lg:leading-[50px] mt-1 mb-2">
+                <h1 className=" flex mobile:text-center mobile:pl-5 tablet:pl-2 tablet:text-left font-Lemon laptop:text-4xl lg-laptop:text-6xl text-2xl lg:text-[50px] w-[30px] leading-[40px] lg:leading-[50px] mt-1 mb-2">
                   WELCOME TO PING PONG GAME
                 </h1>
-                <p className="max-w-[60%] text-stone-300 text-xs mt-1 font-normal">
+                <p className="flex mobile:text-center mobile:px-2  tablet:text-left tablet:max-w-[60%] text-stone-300 text-xs mt-1 font-normal">
                   Enter the world of paddles and balls Begin your Pong journey
                 </p>
               </div>
               <img
-                className="max-w-6xl -mt-20 xl:ml-auto hidden lg:block lg:"
+                className="max-w-6xl -mt-20 xl:ml-auto hidden laptop:block laptop:max-w-[70%]   tablet:block mobile:hidden tablet:max-w-[70%]"
                 src={Group}
                 alt=""
               />
@@ -44,11 +49,10 @@ function Maincontent() {
               initial="hidden"
               whileInView={"show"}
               viewport={{ once: false, amount: 0.7 }}
-              className="flex w-full justify-between min-w-[40%] lg:max-w-lg h-96 p-12 mt-10 rounded-[46px] mx-auto bg-gradient-to-tr from-[#3F3B5B] via-[#2A2742] to-[#302c4bc7] shadow-2xl"
+              className="flex w-full lg-laptop:-mr-20 justify-between tablet:h-96 mobile:h-full  p-12 mt-10 rounded-[46px] mx-auto bg-gradient-to-tr from-[#3F3B5B] via-[#2A2742] to-[#302c4bc7] shadow-2xl"
             >
-
               <div className="flex flex-col text-white">
-                <h1 className=" text-2xl lg:text-[40px] mb-5">Top Streamer</h1>
+                <h1 className=" text-2xl tablet:text-[40px] mb-5 -ml-7 tablet:ml-1 laptop:-ml-0">Top Streamer</h1>
                 <div className="flex flex-row ">
                   <TopStreamer toggle={toggle} />
                 </div>
@@ -63,7 +67,7 @@ function Maincontent() {
             initial="hidden"
             whileInView={"show"}
             viewport={{ once: false, amount: 0.7 }}
-            className="text-white font-PalanquinDark text-4xl ml-5 my-8 "
+            className="text-white font-PalanquinDark mobile:mt-10 mobile:text-2xl lg-laptop:mt-20 text-4xl tablet:text-5xl lg-laptop:ml-32 lg-laptop::text-6xl ml-5 my-8 "
           >
             Game mode
           </motion.div>
@@ -72,24 +76,25 @@ function Maincontent() {
             initial="hidden"
             whileInView={"show"}
             viewport={{ once: false, amount: 0.7 }}
-            className="flex w-full max-w-xl h-60 items-center justify-center mt-72 lg:-mt-1 mx-auto"
+            className="flex w-full  h-60 items-center justify-center mt-72 lg:-mt-1 mx-auto lg-laptop:mt-20"
           >
-            <div className="flex flex-col lg:flex-row max-w-5xl  mx-auto gap-8 space-x-4 group">
-              <div className="bg-gradient-to-tr from-[#3F3B5B] via-[#2A2742] to-[#2A2742] justify-start lg:h-60 lg:w-96 md:w-60 w-52 h-56  duration-500 group-hover:blur-sm hover:!blur-none group-hover:scale-[0.85] hover:!scale-100 cursor-pointer p-8 rounded-[46px] group-hover:mix-blend-luminosity hover:!mix-blend-normal shadow-2xl">
-                <img className="mx-auto md:w-20 lg:w-44" src={Raket} alt="" />
-                <h4 className="uppercase text-xl font-bold text-white">
+            {/* max-w-xl */}
+            <div className="flex flex-col lg-laptop:flex-row laptop:mt-[38rem] lg-laptop:mt-10 max-w-7xl mx-auto gap-8 justify-center items-center  group">
+              <div className="bg-gradient-to-tr from-[#3F3B5B] via-[#2A2742] to-[#2A2742]  lg:h-60 tablet:w-96 lg-laptop:w-[30rem]  mobile:w-44 h-56  duration-500 group-hover:blur-sm hover:!blur-none group-hover:scale-[0.85] hover:!scale-100 cursor-pointer p-8 rounded-[46px] group-hover:mix-blend-luminosity hover:!mix-blend-normal shadow-2xl">
+                <img className="mx-auto tablet:w-44 mobile:mb-8 text-center tablet:mb-0" src={Raket} alt="" />
+                <h4 className="uppercase text-lg tablet:text-xl mobile:text-center tablet:text-start font-bold text-white">
                   classic
                 </h4>
               </div>
-              <div className="bg-gradient-to-tr from-[#3F3B5B] via-[#2A2742] to-[#2A2742] lg:h-60 lg:w-96 w-52 h-56 ml-[30rem]  p-0.5 duration-500 group-hover:blur-sm hover:!blur-none group-hover:scale-[0.85] hover:!scale-100 cursor-pointer p-8 rounded-[46px] group-hover:mix-blend-luminosity hover:!mix-blend-normal shadow-2xl">
-                <img className="mx-auto w-40 -mt-7" src={Astronaut} alt="" />
-                <span className="uppercase text-xl font-bold text-white ml-8">
+              <div className="bg-gradient-to-tr from-[#3F3B5B] via-[#2A2742] to-[#2A2742] lg:h-60 tablet:w-96 mobile:w-44 lg-laptop:w-[30rem] h-56  duration-500 group-hover:blur-sm hover:!blur-none group-hover:scale-[0.85] hover:!scale-100 cursor-pointer p-8 rounded-[46px] group-hover:mix-blend-luminosity hover:!mix-blend-normal shadow-2xl">
+                <img className="mx-auto w-40 -mt-7 tablet:w-36 laptop:w-40 mobile:mb-8 tablet:mb-0" src={Astronaut} alt="" />
+                <span className="uppercase text-lg tablet:text-2xl font-bold mobile:text-center tablet:text-start text-white ml-8">
                   BOT
                 </span>
               </div>
-              <div className=" bg-gradient-to-tr from-[#3F3B5B] via-[#2A2742] to-[#2A2742] lg:h-60 lg:w-96 w-52 h-54  duration-500 group-hover:blur-sm hover:!blur-none group-hover:scale-[0.85] hover:!scale-100 cursor-pointer p-8 rounded-[46px] group-hover:mix-blend-luminosity hover:!mix-blend-normal shadow-2xl">
-                <img className="mx-auto" src={Rakets} alt="" />
-                <h4 className="uppercase text-xl font-bold text-white">
+              <div className=" bg-gradient-to-tr from-[#3F3B5B] via-[#2A2742] to-[#2A2742] lg:h-60 tablet:w-96 mobile:w-44 lg-laptop:w-[30rem] h-56  duration-500 group-hover:blur-sm hover:!blur-none group-hover:scale-[0.85] hover:!scale-100 cursor-pointer p-8 rounded-[46px] group-hover:mix-blend-luminosity hover:!mix-blend-normal shadow-2xl">
+                <img className="mx-auto mobile:mb-8 tablet:mb-0" src={Rakets} alt="" />
+                <h4 className="uppercase text-lg tablet:text-2xl font-bold mobile:text-center tablet:text-start text-white">
                   Random palyer
                 </h4>
               </div>

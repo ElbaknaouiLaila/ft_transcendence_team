@@ -9,6 +9,7 @@ import { motion } from "framer-motion";
 import { fadeIn } from "./variants";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { Modal } from "antd"
 import {
   Card,
@@ -29,6 +30,15 @@ import {
 import { isBlock } from "typescript";
 import { Module } from "module";
 
+type User = {
+  id_user: number;
+  name: string;
+  avatar: string;
+  TwoFactor: boolean;
+  secretKey: string | null;
+  status_user: string;
+};
+
 function FriendList() {
   const [users, setUsers] = useState<
     {
@@ -42,22 +52,30 @@ function FriendList() {
       date: string;
     }[]
   >([]);
+
+  const [friend, setFriend] = useState<User[]>([]);
   const [filteredUser, setFilteredUser] = useState<
     {
-      id: number;
-      img: string;
+      // id: number;
+      // img: string;
+      // name: string;
+      // email: string;
+      // job: string;
+      // org: string;
+      // online: boolean;
+      // date: string;
+      id_user: number;
       name: string;
-      email: string;
-      job: string;
-      org: string;
-      online: boolean;
-      date: string;
+      avatar: string;
+      TwoFactor: boolean;
+      secretKey: string | null;
+      status_user: string;
     }[]
   >([]);
   const navigate = useNavigate();
   useEffect(() => {
     setUsers(TABLE_ROWS);
-    return () => {};
+    return () => { };
   }, []);
 
   useEffect(() => {
@@ -66,10 +84,10 @@ function FriendList() {
     }
   }, [users]);
   useEffect(() => {
-    setFilteredUser(users);
+    setFilteredUser(friend);
   }, [users]);
   const handelChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const filter = users.filter((user) =>
+    const filter = friend.filter((user) =>
       user.name.toLowerCase().includes(event.target.value)
     );
     setFilteredUser(filter);
@@ -78,37 +96,55 @@ function FriendList() {
   const [rmUser, setRmUser] = useState<{ id: number }[]>([]);
   const [isBlocked, setIsBlocked] = useState(false);
 
-  function removeFriend(id: number) {
+  function removeFriend(id_user: number) {
+    axios.post("http://localhost:3000/auth/remove-friends", { id_user }, { withCredentials: true });
+    // setFriend(friend.filter((user) => user.id_user !== id_user));
+    console.log("id_user", id_user);
     Modal.confirm({
       title: 'Are you sure, you want to remove this friend?',
-      okText:'Yes',
-      okType:"danger",
-      className:" flex justify-center items-center h-100vh",
-      onOk:()=>{
-
-        const updatedUsers = users.filter((user) => user.id !== id);
-        setUsers(updatedUsers);
+      okText: 'Yes',
+      okType: "danger",
+      className: " flex justify-center items-center h-100vh",
+      onOk: () => {
+        const updatedUsers = friend.filter((user) => user.id_user !== id_user);
+        setFriend(updatedUsers);
       }
     })
-    
+
   }
-  const handleBlockUser = (id:number) => {
-    setIsBlocked(true);
-    // setBlockedUsers([...blockedUsers, id]);
+  const handleBlockUser = (id_user: number) => {
     console.log("ttttttttttttt")
+    axios.post("http://localhost:3000/auth/Block-friends", { id_user }, { withCredentials: true });
+    const updatedUsers = friend.filter((user) => user.id_user !== id_user);
+    setFriend(updatedUsers);
+    setIsBlocked(true);
+    // setBlockedUsers([...blockedUsers, id_user]);
   };
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data } = await axios.get("http://localhost:3000/auth/friends", { withCredentials: true });
+      console.log("data");
+      setFriend(data);
+    };
+    fetchData();
+    // fetch('https://fakestoreapi.com/users')
+    //   .then((res) => res.json())
+    //   .then((data) => setUsers(data))
+  }, []);
+
   return (
     <motion.div
-    // variants={fadeIn("down", 0.2)}
-    // initial="hidden"
-    // whileInView={"show"}
-    // viewport={{ once: false, amount: 0.7 }}
-    className=" flex w-full h-[90%] text-white bg-transparent mx-10"
+      // variants={fadeIn("down", 0.2)}
+      // initial="hidden"
+      // whileInView={"show"}
+      // viewport={{ once: false, amount: 0.7 }}
+      className=" flex w-full h-[90%] text-white bg-transparent mx-10"
     >
-      <Card className=" flex h-[90%] w-full mx-10 justify-center items-center bg-transparent">
+      <Card className=" flex items-center h-[90%] w-full mx-10  bg-transparent  mt-10">
+      {/* /*justify-start items-start*/ }
         {/* <CardHeader floated={false} shadow={false} className="rounded-none"> */}
         <div className=" flex items-center justify-between gap-8 bg-transparent">
-          <div className="flex items-center justify-between p-4 space-x-96 mb-5">
+          <div className="flex items-center justify-between p-4 space-x-[39rem] mb-5">
             <div className="mx-10 ">
               <Typography
                 className="font-PalanquinDark text-2xl text-white"
@@ -127,7 +163,7 @@ function FriendList() {
             <div>
               <div className="max-w-md mx-auto">
                 <div className="relative flex items-center w-full h-12 rounded-[15px] focus-within:shadow-lg bg-white overflow-hidden">
-                  <div className="grid place-items-center h-full w-12 text-gray-300">
+                  <div className="grid place-items-center h-full w-24 text-gray-300">
                     <AiOutlineSearch />
                   </div>
 
@@ -166,7 +202,7 @@ function FriendList() {
             </div>
           </div>
         </div>
-        <div className="flex flex-col items-center justify-between gap-4 md:flex-row ml-5">
+        <div className="flex flex-col items-center justify-between gap-8 md:flex-row ml-5">
           {/* <Tabs value="all" className="w-full md:w-max mx-5">
               <TabsHeader>
                 {TABS.map(({ label, value }) => (
@@ -185,10 +221,10 @@ function FriendList() {
         </div>
         {/* </CardHeader> */}
         {/* <div className="flex justify-center m-10 "> */}
-        <CardBody className=" overflow-scroll resultUserContainer px-0 justify-center w-[90%] bg-transparent">
-          <table className="w-[90%] min-w-max table-auto text-left flex flex-col  justify-center ">
-            <thead className=" flex justify-end">
-              <tr className=" fixed absolute flex -mt-12 ml-56 justify-center space-x-20">
+        <CardBody className=" flex overflow-scroll resultUserContainer px-0 justify-center items-center w-[90%] bg-transparent">
+          <table className="w-[90%] min-w-max table-auto text-left flex flex-col justify-center ">
+            <thead className=" flex justify-center items-center">
+              <tr className="   flex ml-[40rem] justify-between space-x-32 fixed">
                 {TABLE_HEAD.map((head) => (
                   <th key={head} className=" bg-blue-gray-50/50 p-4  ">
                     <Typography
@@ -203,33 +239,29 @@ function FriendList() {
               </tr>
             </thead>
             <tbody className="flex flex-col w-full mx-auto justify-evenly items-center ">
-              {filteredUser.map(
+              {friend.map(
                 (
                   {
-                    id,
-                    img,
+                    id_user,
                     name,
-                    email,
-                    job,
-                    org,
-                    online,
-                    date,
+                    avatar,
+                    TwoFactor,
+                    secretKey,
+                    status_user,
                   }: {
-                    id: number;
-                    img: string;
+                    id_user: number;
                     name: string;
-                    email: string;
-                    job: string;
-                    org: string;
-                    date: string;
-                    online: boolean;
+                    avatar: string;
+                    TwoFactor: boolean;
+                    secretKey: string | null;
+                    status_user: string;
                   },
                   index: number
                 ) => {
                   const isLast = index === TABLE_ROWS.length - 1;
                   const classes = isLast ? "p-4 w-12 h-12" : "p-4 w-12 h-12";
                   const animationDelay = index * 0.5;
-                  
+
                   const handleProfileClick = (friend: any) => {
                     // Update selectedFriend with the clicked friend's information
                     navigate(`/profileFriend/${friend.id}`);
@@ -243,22 +275,22 @@ function FriendList() {
                         viewport={{ once: false, amount: 0.7 }}
                         transition={{ duration: 2.3, delay: animationDelay }}
                         className="flex bg-black/30 space-x-32 rounded-[27px] w-[70rem] my-2 p-4 justify-evenly items-center"
-                        key={id}
+                        key={id_user}
                       >
                         <td className={`${classes} flex`}>
                           <div className="flex items-center gap-3">
                             <Avatar
                               className="flex items-center w-12 h-12 rounded-full"
-                              src={img}
+                              src={avatar}
                               alt={name}
                               size="sm"
-                            onClick={()=>handleProfileClick({id})}/>
+                              onClick={() => handleProfileClick({ id_user })} />
                             <div className="flex flex-col">
                               <Typography
                                 variant="small"
                                 color="blue-gray"
                                 className="font-normal text-white w-40 cursor-pointer"
-                                onClick={()=>handleProfileClick({id})}
+                                onClick={() => handleProfileClick({ id_user })}
                               >
                                 {name}
                               </Typography>
@@ -279,7 +311,7 @@ function FriendList() {
                               color="blue-gray"
                               className="font-normal ml-10 text-gray-500"
                             >
-                              {job}
+                              {14}
                             </Typography>
                             {/* <Typography
                                   variant="small"
@@ -296,7 +328,7 @@ function FriendList() {
                             color="blue-gray"
                             className="font-normal ml-14 text-gray-500"
                           >
-                            {date}
+                            {125}
                           </Typography>
                         </td>
                         <td className={classes}>
@@ -304,10 +336,9 @@ function FriendList() {
                             <Chip
                               variant="ghost"
                               size="sm"
-                              value={online ? "online" : "offline"}
-                              className={`${
-                                online ? " text-green-300" : " text-gray-500"
-                              }`}
+                              value={status_user ? "online" : "offline"}
+                              className={`${status_user ? " text-green-300" : " text-gray-500"
+                                }`}
                             />
                           </div>
                         </td>
@@ -317,16 +348,16 @@ function FriendList() {
                               Blocked
                             </div>
                           ) : (
-                            <Tooltip content="Block User" onClick={()=>handleBlockUser(id)}>
-                              <IconButton variant="text" className="" >
-                                <BiBlock className="h-8 w-8 text-red-400 -ml-14" />
-                              </IconButton>
+                            <Tooltip content="Block User" >
+                              {/* <Button variant="text" className="" > */}
+                                <BiBlock className="h-8 w-8 text-red-400 -ml-14 cursor-pointer" onClick={() => handleBlockUser(id_user)}/>
+                              {/* </Button> */}
                             </Tooltip>
                           )}
                         </td>
                         <td className={`${classes} flex items-center`}>
                           <div
-                            onClick={() => removeFriend(id)}
+                            onClick={() => removeFriend(id_user)}
                             className=" text-red-400 font-bold -ml-20 cursor-pointer"
                           >
                             remove

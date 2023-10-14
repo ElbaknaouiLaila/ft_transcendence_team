@@ -3,6 +3,18 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx,html,css}"],
   theme: {
     extend: {
+      screens: {
+        'mobile': '320px',
+        // => @media (min-width: 640px) { ... }
+  
+        'tablet': '768px',
+        // => @media (min-width: 1024px) { ... }
+  
+        'laptop': '1024px',
+        // => @media (min-width: 1280px) { ... }
+        'lg-laptop': '1280px',
+        // => @media (min-width: 1280px) { ... }
+      },
       colors:{
         glass: "rgba(255, 255, 255, 0.25)",
         brown: "rgb(30, 30 , 17);",

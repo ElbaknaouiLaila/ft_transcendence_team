@@ -15,9 +15,10 @@ import Authentication from "../components/Authentication";
 import FriendList from "./components/FriendList";
 import { useLocation } from "react-router-dom";
 import ProfileCardUser from "./components/ProfileCardUser";
+import Login from "../components/Login";
 function Home() {
   const location = useLocation();
-  const showSidebarPaths = ["/", "/profile", "/messages", "/friends", "/game", "/setting"];
+  const showSidebarPaths = ["/home", "/profile", "/messages", "/friends", "/game", "/setting"];
   const showSidebar = showSidebarPaths.includes(location.pathname);
   return (
     <div className="flex h-screen ">
@@ -26,7 +27,8 @@ function Home() {
         <div className="flex h-full ">
         {showSidebar &&  <Sidebar />}
           <Routes>
-            <Route path="/" element={<LandingPage />}></Route>
+            <Route path="/" element={<Login />}></Route>
+            <Route path="/home" element={<LandingPage />}></Route>
             <Route path="/profile" element={<Profile />}></Route>
             <Route path="/messages" element={<Messages />}></Route>
             <Route path="/friends" element={<FriendList />}></Route>
@@ -35,8 +37,8 @@ function Home() {
             {/* <Route path="/profileFriend" element={<ProfileCardUser/>}></Route> */}
             <Route path="/profileFriend/:friendId" element={<ProfileCardUser />} />
             {/* <Route path="/profileFriend/:friendId" element={<ProfileCardUser />} /> */}
-
-            <Route path="/login" element={<Authentication />}></Route>
+            <Route path="/login" element={<Login />}></Route>
+            <Route path="/Authentication" element={<Authentication />}></Route>
           </Routes>
           {showSidebar && <Rightbar />}
           {/* <Footer /> */}
