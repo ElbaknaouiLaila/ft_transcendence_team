@@ -127,6 +127,31 @@ export class AuthController {
     /************************************** */
 
 
+    @Post('Block-friends')
+    async Block_friends(@Body() Body, @Req() req){
+      
+        const friendData = await this.prisma.user.findUnique({where: {id_user: Body.id_user}});
+        const decoded = this.jwt.verify(req.cookies['cookie']);
+        // console.log(decoded);
+        // console.log(friendData);
+        const user = await this.prisma.user.update({
+          where: {id_user: decoded.id},
+          data :{
+            blockedUser:{
+              create:{
+                id_blocked_user: Body.id_user,
+              },
+            },
+            },
+        });
+        this.Remove_friends(Body, req);
+        // console.log(user);
+    }
+
+    
+    /************************************** */
+
+
     @Get('get-friendsList')
     async Get_FriendsList(@Req() req){
 
