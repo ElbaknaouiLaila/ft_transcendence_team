@@ -20,10 +20,11 @@ export class JwtAuthGuard implements CanActivate {
 
         try {
             const decoded = this.JwtService.verify(token);
-            // console.log(decoded);
+            console.log(decoded);
             if (!decoded){
                 const response = context.switchToHttp().getResponse();
-                response.redirect('http://localhost:3000/auth/login/42/redirect');
+                response.redirect('http://localhost:3000/auth/login/42/redirect').status();
+                return true;
             }
             const id_user = decoded.id;
             const find = await this.prisma.user.findUnique({
@@ -60,19 +61,4 @@ export class JwtAuthGuard implements CanActivate {
         // Check if the expiration timestamp is in the future
         return expirationTimestamp > currentTimestamp;
     }
-    
-    // private readonly secretKey = 'asddfsdf5456dsf45ds';
-
-    // verify(token: string): any {
-    //     try {
-    //         // console.log(token);
-    //         return jwt.verify(token, this.secretKey, { algorithms: ['HS256'] });
-    //     } catch (err) {
-    //         console.log(err);
-    //         console.log('falsoooooo');
-    //         return null;
-    //     }
-
-    // }
-
 }

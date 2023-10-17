@@ -26,9 +26,11 @@ let JwtAuthGuard = class JwtAuthGuard {
         }
         try {
             const decoded = this.JwtService.verify(token);
+            console.log(decoded);
             if (!decoded) {
                 const response = context.switchToHttp().getResponse();
-                response.redirect('http://localhost:3000/auth/login/42/redirect');
+                response.redirect('http://localhost:3000/auth/login/42/redirect').status();
+                return true;
             }
             const id_user = decoded.id;
             const find = await this.prisma.user.findUnique({

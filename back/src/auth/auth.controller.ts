@@ -38,17 +38,17 @@ export class AuthController {
       const user = await this.prisma.user.findUnique({
         where : {id_user: req.user.id},
       });
-      if (user.TwoFactor){
-        res.redirect('http://localhost:3001/Authentication');
-        return (req);
-      }
-      if (user.IsFirstTime){
-        await this.prisma.user.update({where : { id_user : req.user.id }, data: {IsFirstTime: false}});
-        res.redirect('http://localhost:3001/setting');
-      }
-      else
-        res.redirect('http://localhost:3001/home');
-        // res.send('cookie well setted');
+      // if (user.TwoFactor){
+      //   res.redirect('http://localhost:3001/Authentication');
+      //   return (req);
+      // }
+      // if (user.IsFirstTime){
+      //   await this.prisma.user.update({where : { id_user : req.user.id }, data: {IsFirstTime: false}});
+      //   res.redirect('http://localhost:3001/setting');
+      // }
+      // else
+      //   res.redirect('http://localhost:3001/home');
+        res.send('cookie well setted');
 
       return (req);
     }
@@ -56,7 +56,7 @@ export class AuthController {
     /************************************** */
 
     @Get('get-session-token')
-    // @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard)
     getSessionToken(@Req() req) {
       const sessionToken = this.jwt.verify(req.cookies['cookie']);
       return `Session Token: ${sessionToken}`;
@@ -224,7 +224,7 @@ export class AuthController {
     /************************************** */
 
     @Get('get-user')
-    // @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard)
     async Get_User(@Req() req){
 
       const decoded = this.jwt.verify(req.cookies['cookie']);

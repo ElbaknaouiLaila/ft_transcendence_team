@@ -20,6 +20,8 @@ const profile_controller_1 = require("./profile/profile.controller");
 const profile_service_1 = require("./profile/profile.service");
 const profile_module_1 = require("./profile/profile.module");
 const jwt_1 = require("@nestjs/jwt");
+const socket_gateway_1 = require("./socket/socket.gateway");
+const socket_module_1 = require("./socket/socket.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -27,12 +29,12 @@ exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [auth_module_1.AuthModule, prisma_module_1.PrismaModule,
             passport_1.PassportModule.register({ Session: true }),
-            profile_module_1.ProfileModule, jwt_1.JwtModule
+            profile_module_1.ProfileModule, jwt_1.JwtModule, socket_module_1.SocketModule
         ],
         controllers: [app_controller_1.AppController, auth_controller_1.AuthController,
             profile_controller_1.ProfileController],
         providers: [app_service_1.AppService, auth_service_1.AuthService,
-            jwtservice_service_1.JwtService, profile_service_1.ProfileService],
+            jwtservice_service_1.JwtService, profile_service_1.ProfileService, socket_gateway_1.SocketGateway, socket_gateway_1.SocketGateway],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

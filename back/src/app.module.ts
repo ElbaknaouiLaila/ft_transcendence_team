@@ -11,17 +11,19 @@ import { ProfileController } from './profile/profile.controller';
 import { ProfileService } from './profile/profile.service';
 import { ProfileModule } from './profile/profile.module';
 import { JwtModule } from '@nestjs/jwt';
+import { SocketGateway } from './socket/socket.gateway';
+import { SocketModule } from './socket/socket.module';
 
 @Module({
   imports: [AuthModule, PrismaModule,
             PassportModule.register({Session: true}),
-            ProfileModule, JwtModule/*, JwtModule.register({
+            ProfileModule, JwtModule, SocketModule/*, JwtModule.register({
               secret: 'your-secret-key', // Replace with your secret key
               signOptions: { expiresIn: '1m' }, // Token expiration time            
             })*/],
   controllers: [AppController, AuthController,
                 ProfileController],
   providers: [AppService, AuthService,
-              JwtService, ProfileService],
+              JwtService, ProfileService, SocketGateway, SocketGateway],
 })
 export class AppModule {}
