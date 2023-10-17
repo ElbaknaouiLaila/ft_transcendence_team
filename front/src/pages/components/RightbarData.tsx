@@ -47,7 +47,9 @@ const RightbarData: React.FC<RightbarDataProps> = ({ toggle }) => {
           className={`${
             toggle ? "last:w-[3.6rem]" : "last:w-[17rem] pt-2.5"
           } rightbar left-4`}
+          onClick={() => handleProfileClick(data)}
           key={data.id}
+
         >
           <div className="relative group">
             <img className="w-12 h-12 rounded-full pt-0" src={data.src} alt="" />

@@ -34,7 +34,7 @@ export const datas = [
         id: 4,
         icon: <IoGameControllerOutline/>,
         text: "Game",
-        path: "game",
+        path: "/game",
     },
     {
         id: 5,

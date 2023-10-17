@@ -36,7 +36,7 @@ function Rightbar() {
           <div className={`${toggle ? "w-[5.8rem]" : ""} rightbar-container `}>
             <div className="group">
               <img
-                className="w-14 h-14 p-1 rounded-full ring-2 ring-gray-300 dark:ring-[#FE754D] "
+                className="w-14 h-14 p-1 rounded-full ring-2 ring-[#FE754D] dark:ring-[#FE754D] "
                 src={Arcane}
                 alt="Bordered avatar"
               />

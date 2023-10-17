@@ -81,19 +81,19 @@ function Maincontent() {
             {/* max-w-xl */}
             <div className="flex flex-col lg-laptop:flex-row laptop:mt-[38rem] lg-laptop:mt-10 max-w-7xl mx-auto gap-8 justify-center items-center  group">
               <div className="bg-gradient-to-tr from-[#3F3B5B] via-[#2A2742] to-[#2A2742]  lg:h-60 tablet:w-96 lg-laptop:w-[30rem]  mobile:w-44 h-56  duration-500 group-hover:blur-sm hover:!blur-none group-hover:scale-[0.85] hover:!scale-100 cursor-pointer p-8 rounded-[46px] group-hover:mix-blend-luminosity hover:!mix-blend-normal shadow-2xl">
-                <img className="mx-auto tablet:w-44 mobile:mb-8 text-center tablet:mb-0" src={Raket} alt="" />
-                <h4 className="uppercase text-lg tablet:text-xl mobile:text-center tablet:text-start font-bold text-white">
+                <img className="mx-auto lg-laptop:-mt-14 tablet:w-44 mobile:mb-8 text-center tablet:mb-0 lg-laptop:mb-10" src={Raket} alt="" />
+                <h4 className="uppercase text-lg tablet:text-xl mobile:text-center tablet:text-start  font-bold text-white">
                   classic
                 </h4>
               </div>
               <div className="bg-gradient-to-tr from-[#3F3B5B] via-[#2A2742] to-[#2A2742] lg:h-60 tablet:w-96 mobile:w-44 lg-laptop:w-[30rem] h-56  duration-500 group-hover:blur-sm hover:!blur-none group-hover:scale-[0.85] hover:!scale-100 cursor-pointer p-8 rounded-[46px] group-hover:mix-blend-luminosity hover:!mix-blend-normal shadow-2xl">
-                <img className="mx-auto w-40 -mt-7 tablet:w-36 laptop:w-40 mobile:mb-8 tablet:mb-0" src={Astronaut} alt="" />
-                <span className="uppercase text-lg tablet:text-2xl font-bold mobile:text-center tablet:text-start text-white ml-8">
+                <img className="mx-auto w-40 lg-laptop:-mt-14 -mt-7 tablet:w-36 laptop:w-40 mobile:mb-8 tablet:mb-0" src={Astronaut} alt="" />
+                <span className="uppercase text-lg tablet:text-2xl font-bold mobile:text-center tablet:text-start text-white ml-3">
                   BOT
                 </span>
               </div>
               <div className=" bg-gradient-to-tr from-[#3F3B5B] via-[#2A2742] to-[#2A2742] lg:h-60 tablet:w-96 mobile:w-44 lg-laptop:w-[30rem] h-56  duration-500 group-hover:blur-sm hover:!blur-none group-hover:scale-[0.85] hover:!scale-100 cursor-pointer p-8 rounded-[46px] group-hover:mix-blend-luminosity hover:!mix-blend-normal shadow-2xl">
-                <img className="mx-auto mobile:mb-8 tablet:mb-0" src={Rakets} alt="" />
+                <img className="mx-auto lg-laptop:-mt-14 tablet:-mt-5 mobile:mb-8 tablet:mb-0 lg-laptop:mb-5" src={Rakets} alt="" />
                 <h4 className="uppercase text-lg tablet:text-2xl font-bold mobile:text-center tablet:text-start text-white">
                   Random palyer
                 </h4>
