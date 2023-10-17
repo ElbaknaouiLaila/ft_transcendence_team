@@ -5,6 +5,9 @@ import { TbPhotoEdit, TbUserEdit } from "react-icons/tb";
 import { motion } from "framer-motion";
 import { fadeIn } from "./variants";
 import axios from "axios";
+import AboutMe from "./AboutMe";
+import Cover from "../../img/bg33.png";
+
 
 type User = {
   id_user: number;
@@ -50,83 +53,92 @@ function MaincontentSetting() {
   // }
   const toggleTwoFactor = async (user: User) => {
     const updatedTwoFactorStatus = !user.TwoFactor;
-    
+
     // Optimistically update the UI
     setTwoFactor((prevUsers) =>
       prevUsers.map((u) => (u.id_user === user.id_user ? { ...u, TwoFactor: updatedTwoFactorStatus } : u))
     );
-    
+
     const backendURL = "http://localhost:3000/auth/TwoFactorAuth";
     const data = { id_user: user.id_user, enable: updatedTwoFactorStatus };
-    
+
     try {
       const response = await axios.post(backendURL, data, {
         withCredentials: true,
       });
-      
+
       console.log("Backend response:", response.data);
-  
+
       // You can handle the response here as needed.
     } catch (error) {
       console.error("Error:", error);
-      
+
       // If there's an error, revert the UI back to the previous state
       setTwoFactor((prevUsers) =>
         prevUsers.map((u) => (u.id_user === user.id_user ? { ...u, TwoFactor: !updatedTwoFactorStatus } : u))
       );
     }
   }
-  
+
 
   return (
     <>
-      {Data.map((data) => {
+      {twoFactor.map((data) => {
         return (
-          <section key={data.id} className="text-gray-600 body-font   w-full">
+          <section key={data.id_user} className="overflow-scroll resultUserContainer text-gray-600 body-font   w-full">
             <div className="container px-5 py-24 mx-auto">
-              <div className="flex flex-wrap -m-4 justify-center ">
+              <div className="flex flex-col items-center lg-laptop:items-stretch  lg-laptop:flex-row -m-4 justify-center  ">
                 <motion.div
                   variants={fadeIn("right", 0.2)}
                   initial="hidden"
                   whileInView={"show"}
                   viewport={{ once: false, amount: 0.7 }}
-                  className="p-4 md:w-1/3 w-full"
+                  className="p-4 lg-laptop:w-1/3 w-full"
                 >
-                  <div className=" text-white text-4xl font-PalanquinDark mb-10">
-                    Account Setting{" "}
+                  <div className="flex justify-center text-white text-xl tablet:text-4xl font-PalanquinDark mb-10">
+                    Account Setting
                   </div>
-                  <div className="h-full   bg-gradient-to-tr from-[#3F3B5B] via-[#2A2742] to-[#302c4bc7] shadow-2xl p-8 rounded-[46px]  ">
-                    <div className="flex flex-col justify-center items-center">
+                  <div className="h-full min-w-[22vh] -ml-4 tablet:ml-0 tablet:min-w-[40vh] lg-laptop:!min-w-[20vh]  bg-gradient-to-tr from-[#3F3B5B] via-[#2A2742] to-[#302c4bc7] shadow-2xl p-8 rounded-[46px]  ">
+                    <div
+                      className="flex flex-col justify-center items-center bg-slate-500 bg-cover rounded-2xl"
+                      title="object-center"
+                      style={{
+                        backgroundImage: `url(${Cover})`,
+                      }}
+                    >
                       <img
-                        className="w-28 h-28  p-1 rounded-full ring-4 ring-gray-300 dark:ring-[#3b3c5a]"
+                        className=" flex items-end justify-end mobile:w-20 mobile:h-20 tablet:w-20 tablet:h-20 mt-10  p-0.5 rounded-full ring-4 ring-gray-300 dark:ring-[#3b3c5a]"
                         src={Arcan}
                         alt=""
                       />
-                      <span className=" font-Lalezar font-bold text-4xl  mt-5 text-white">
-                        Jinx
-                      </span>
+
                     </div>
-                    <div className=" flex flex-col  items-center">
-                      <div className=" flex justify-center items-center my-6 text-sm px-4 md:w-80 bg-gradient-to-tr from-[#3f3b5b7e] via-[#3d395896] to-[#4d477498] shadow-2xl rounded-3xl p-4">
-                        <div className="flex flex-col items-center font-semibold mr-4">
-                          <div className=" text-xl text-white font-bold">
-                            {data.GamesPlayed}
+                    <div className=" flex flex-col  items-center mt-8">
+                      <span className=" font-Lalezar font-bold text-4xl  text-white">
+                        {data.name}
+                      </span>
+                      <div className=" justify-center hidden tablet:block items-center mb-3 text-sm px-4 md:w-80 bg-transparent rounded-3xl p-4">
+                        <div className=" flex flex-row justify-center items-center">
+                          <div className="flex flex-col items-center font-semibold mr-4">
+                            <div className=" text-xl text-white font-bold">
+                              {/* {data.GamesPlayed} */}121
+                            </div>
+                            <div className="text-sm text-[#A3AED0]">
+                              Games Played
+                            </div>
                           </div>
-                          <div className="text-sm text-[#A3AED0]">
-                            Games Played
+                          <div className="flex flex-col items-center font-semibold mr-4">
+                            <div className=" text-xl text-white font-bold">
+                              {/* {data.Win} */}132 %
+                            </div>
+                            <div className="text-sm text-[#A3AED0]">Win</div>
                           </div>
-                        </div>
-                        <div className="flex flex-col items-center font-semibold mr-4">
-                          <div className=" text-xl text-white font-bold">
-                            {data.Win}
+                          <div className="flex flex-col items-center font-semibold">
+                            <div className=" text-xl text-white font-bold">
+                              {/* {data.Loss} */}12 %
+                            </div>
+                            <div className="text-sm text-[#A3AED0]">Loss</div>
                           </div>
-                          <div className="text-sm text-[#A3AED0]">Win</div>
-                        </div>
-                        <div className="flex flex-col items-center font-semibold">
-                          <div className=" text-xl text-white font-bold">
-                            {data.Loss}
-                          </div>
-                          <div className="text-sm text-[#A3AED0]">Loss</div>
                         </div>
                       </div>
                       <div className=" flex flex-row text-white items-center text-center">
@@ -153,18 +165,40 @@ function MaincontentSetting() {
                   initial="hidden"
                   whileInView={"show"}
                   viewport={{ once: false, amount: 0.7 }}
-                  className="p-4 md:w-1/3 w-full space-x-10"
+                  className="p-4  tablet:w-1/3 w-full lg-laptop:space-x-10"
                 >
-                  <div className=" text-white text-4xl font-PalanquinDark mb-10 ml-10">
+                  <div className=" flex justify-center text-white text-xl tablet:text-4xl font-PalanquinDark mb-10 ml-10">
                     Help
                   </div>
-                  <div className="h-full  bg-gradient-to-tr from-[#3F3B5B] via-[#2a2742af] to-[#454069c7] shadow-2xl  p-8 rounded-[46px]">
+                  <div className="h-full tablet:min-w-[40vh] lg-laptop:min-w-[20vh] bg-gradient-to-tr from-[#3F3B5B] via-[#2a2742af] to-[#454069c7] shadow-2xl  p-8 rounded-[46px]">
                     <p className="leading-relaxed mb-6 text-[#A3AED0]">
                       Synth chartreuse iPhone lomo cray raw denim brunch
                       everyday carry neutra before they sold out fixie 90's
                       microdosing. Tacos pinterest fanny pack venmo,
                       post-ironic heirloom try-hard pabst authentic iceland.
                     </p>
+                  </div>
+                </motion.div>
+                <motion.div
+                  variants={fadeIn("right", 0.2)}
+                  initial="hidden"
+                  whileInView={"show"}
+                  viewport={{ once: false, amount: 0.7 }}
+                  className="p-4 laptop:w-3/4 lg-laptop:w-1/3  w-full lg-laptop:space-x-10"
+                >
+                  <div className="flex  justify-start  mobile:ml-10 lg-laptop:justify-center  text-white text-xl tablet:text-4xl font-PalanquinDark mb-10  lg-laptop:ml-11">
+                    About me
+                  </div>
+                  {/* <div className=" flex justify-start items-start lg-laptop:justify-center lg-laptop:items-center"> */}
+                    <div className="flex  justify-center h-full bg-gradient-to-tr tablet:w-[50%]  lg-laptop:w-full from-[#3F3B5B] via-[#2a2742af] to-[#454069c7] shadow-2xl p-4  tablet:p-8 rounded-[46px]">
+                      <AboutMe />
+                      {/* <p className="leading-relaxed mb-6 text-[#A3AED0]">
+                        Synth chartreuse iPhone lomo cray raw denim brunch
+                        everyday carry neutra before they sold out fixie 90's
+                        microdosing. Tacos pinterest fanny pack venmo,
+                        post-ironic heirloom try-hard pabst authentic iceland.
+                      </p> */}
+                    {/* </div> */}
                   </div>
                 </motion.div>
               </div>
@@ -174,7 +208,7 @@ function MaincontentSetting() {
                 whileInView={"show"}
                 viewport={{ once: false, amount: 0.7 }}
               >
-                <div className=" flex justify-center items-center text-white font-bold text-4xl mt-32 mb-10">
+                <div className=" flex justify-center items-center text-white font-bold text-xl tablet:text-4xl mt-32 mb-10">
                   Two Factor Authentication
                 </div>
                 <div className="flex justify-center items-center">

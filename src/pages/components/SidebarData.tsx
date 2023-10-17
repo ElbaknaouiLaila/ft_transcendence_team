@@ -1,13 +1,15 @@
 // import React from "react";
 import { datas } from "../Data/Data";
-import { Link, useRoutes} from "react-router-dom";
+import { Link, useRoutes, useLocation} from "react-router-dom";
 import React, { useCallback, useState } from "react";
 
 interface SidebarDataProps {
   toggle: boolean;
 }
 const SidebarData: React.FC<SidebarDataProps> = ({ toggle }) => {
-  const [activeSection, setActiveSection] = useState("Dashboard");
+  const location = useLocation();
+  console.log(location.pathname);
+  const [activeSection, setActiveSection] = useState(location.pathname);
   const logoutUser = useCallback(()=>{
     localStorage.removeItem("sidebar");
   }, [])
@@ -31,8 +33,8 @@ const SidebarData: React.FC<SidebarDataProps> = ({ toggle }) => {
           >
             <Link
               to={data.path}
-              onClick={() => setActiveSection(data.text)}
-              className={`${data.text === activeSection && 'bg-gradient-to-br from-[#f78562] to-[#ce502a] text-white'} "lg:mr-8 text-lg lg:text-[1.7rem] sidebar text-[#7B7987] hover:text-white "`}
+              onClick={() => setActiveSection(data.path)}
+              className={`${data.path === activeSection && 'bg-gradient-to-br from-[#f78562] to-[#ce502a] text-white'} "lg:mr-8 text-lg lg:text-[1.7rem] sidebar text-[#7B7987] hover:text-white "`}
             >
               {data.icon}
             </Link>
