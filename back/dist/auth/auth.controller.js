@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const auth_service_1 = require("./auth.service");
 const passport_1 = require("@nestjs/passport");
 const jwtservice_service_1 = require("../jwt/jwtservice.service");
+const JwtGuard_1 = require("../jwt/JwtGuard");
 const prisma_service_1 = require("../prisma/prisma.service");
 let AuthController = class AuthController {
     constructor(service, jwt, prisma) {
@@ -31,16 +32,7 @@ let AuthController = class AuthController {
         const user = await this.prisma.user.findUnique({
             where: { id_user: req.user.id },
         });
-        if (user.TwoFactor) {
-            res.redirect('http://localhost:3001/Authentication');
-            return (req);
-        }
-        if (user.IsFirstTime) {
-            await this.prisma.user.update({ where: { id_user: req.user.id }, data: { IsFirstTime: false } });
-            res.redirect('http://localhost:3001/setting');
-        }
-        else
-            res.redirect('http://localhost:3001/home');
+        res.send('cookie well setted');
         return (req);
     }
     getSessionToken(req) {
@@ -80,6 +72,21 @@ let AuthController = class AuthController {
                 ]
             },
         });
+    }
+    async Block_friends(Body, req) {
+        const friendData = await this.prisma.user.findUnique({ where: { id_user: Body.id_user } });
+        const decoded = this.jwt.verify(req.cookies['cookie']);
+        const user = await this.prisma.user.update({
+            where: { id_user: decoded.id },
+            data: {
+                blockedUser: {
+                    create: {
+                        id_blocked_user: Body.id_user,
+                    },
+                },
+            },
+        });
+        this.Remove_friends(Body, req);
     }
     async Get_FriendsList(req) {
         const decoded = this.jwt.verify(req.cookies['cookie']);
@@ -165,6 +172,7 @@ __decorate([
 ], AuthController.prototype, "redirect", null);
 __decorate([
     (0, common_1.Get)('get-session-token'),
+    (0, common_1.UseGuards)(JwtGuard_1.JwtAuthGuard),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -202,6 +210,14 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "Remove_friends", null);
 __decorate([
+    (0, common_1.Post)('Block-friends'),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "Block_friends", null);
+__decorate([
     (0, common_1.Get)('get-friendsList'),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -217,6 +233,7 @@ __decorate([
 ], AuthController.prototype, "only_friends", null);
 __decorate([
     (0, common_1.Get)('get-user'),
+    (0, common_1.UseGuards)(JwtGuard_1.JwtAuthGuard),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),

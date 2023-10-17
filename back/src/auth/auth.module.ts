@@ -20,5 +20,6 @@ import { JwtModule } from '@nestjs/jwt';
   providers: [AuthService, FortyTwoStrategy, 
               PrismaService, JwtService,
               SessionSerializer],
+
 })
 export class AuthModule {}
