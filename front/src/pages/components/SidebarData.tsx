@@ -8,7 +8,7 @@ interface SidebarDataProps {
 }
 const SidebarData: React.FC<SidebarDataProps> = ({ toggle }) => {
   const location = useLocation();
-  console.log(location.pathname);
+  // console.log(location.pathname);
   const [activeSection, setActiveSection] = useState(location.pathname);
   const logoutUser = useCallback(()=>{
     localStorage.removeItem("sidebar");

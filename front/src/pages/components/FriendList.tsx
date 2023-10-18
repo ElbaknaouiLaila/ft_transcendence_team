@@ -230,7 +230,7 @@ function FriendList() {
                     <Typography
                       variant="small"
                       color="blue-gray"
-                      className=" leading-none opacity-70 font-bold text-xl text-white "
+                      className="leading-none opacity-70 font-bold text-xl text-white "
                     >
                       {head}
                     </Typography>

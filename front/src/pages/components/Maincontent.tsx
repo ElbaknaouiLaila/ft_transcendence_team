@@ -20,7 +20,7 @@ function Maincontent() {
               initial="hidden"
               whileInView={"show"}
               viewport={{ once: false, amount: 0.7 }}
-              className="flex w-full  h-96 pl-2 lg:pl-10 pt-10 mt-10 rounded-[46px] lg-laptop:ml-32  mx-auto bg-gradient-to-tr from-[#2A2742] via-[#3f3a5f] to-[#2A2742] shadow-2xl"
+              className="flex w-full  h-96 lg-laptop:h-[30rem] pl-2 lg:pl-10 pt-10 mt-10 rounded-[46px] lg-laptop:ml-32  mx-auto bg-gradient-to-tr from-[#2A2742] via-[#3f3a5f] to-[#2A2742] shadow-2xl"
             >
               <div className="flex flex-col text-white">
               <img
@@ -49,7 +49,7 @@ function Maincontent() {
               initial="hidden"
               whileInView={"show"}
               viewport={{ once: false, amount: 0.7 }}
-              className="flex w-full lg-laptop:-mr-20 justify-between tablet:h-96 mobile:h-full  p-12 mt-10 rounded-[46px] mx-auto bg-gradient-to-tr from-[#3F3B5B] via-[#2A2742] to-[#302c4bc7] shadow-2xl"
+              className="flex w-full lg-laptop:-mr-20 justify-between lg-laptop:h-[30rem] tablet:h-96 mobile:h-full  p-12 mt-10 rounded-[46px] mx-auto bg-gradient-to-tr from-[#3F3B5B] via-[#2A2742] to-[#302c4bc7] shadow-2xl"
             >
               <div className="flex flex-col text-white">
                 <h1 className=" text-2xl tablet:text-[40px] mb-5 -ml-7 tablet:ml-1 laptop:-ml-0">Top Streamer</h1>
@@ -76,23 +76,23 @@ function Maincontent() {
             initial="hidden"
             whileInView={"show"}
             viewport={{ once: false, amount: 0.7 }}
-            className="flex w-full  h-60 items-center justify-center mt-72 lg:-mt-1 mx-auto lg-laptop:mt-20"
+            className="flex w-full  h-60 items-center justify-center mt-72 lg:-mt-1 mx-auto lg-laptop:mt-20 lg-laptop:mx-0"
           >
             {/* max-w-xl */}
-            <div className="flex flex-col lg-laptop:flex-row laptop:mt-[38rem] lg-laptop:mt-10 max-w-7xl mx-auto gap-8 justify-center items-center  group">
-              <div className="bg-gradient-to-tr from-[#3F3B5B] via-[#2A2742] to-[#2A2742]  lg:h-60 tablet:w-96 lg-laptop:w-[30rem]  mobile:w-44 h-56  duration-500 group-hover:blur-sm hover:!blur-none group-hover:scale-[0.85] hover:!scale-100 cursor-pointer p-8 rounded-[46px] group-hover:mix-blend-luminosity hover:!mix-blend-normal shadow-2xl">
-                <img className="mx-auto lg-laptop:-mt-14 tablet:w-44 mobile:mb-8 text-center tablet:mb-0 lg-laptop:mb-10" src={Raket} alt="" />
+            <div className="flex flex-col lg-laptop:flex-row laptop:mt-[38rem] lg-laptop:mt-10 max-w-full mx-auto gap-8 justify-center items-center  group">
+              <div className="bg-gradient-to-tr from-[#3F3B5B] via-[#2A2742] to-[#2A2742]  lg:h-60 tablet:w-96 lg-laptop:w-[30rem] lg-laptop:h-72  mobile:w-44 h-56  duration-500 group-hover:blur-sm hover:!blur-none group-hover:scale-[0.85] hover:!scale-100 cursor-pointer p-8 rounded-[46px] group-hover:mix-blend-luminosity hover:!mix-blend-normal shadow-2xl">
+                <img className="mx-auto lg-laptop:-mt-14 tablet:w-44 lg-laptop:w-60 mobile:mb-8 text-center tablet:mb-0 lg-laptop:mb-10" src={Raket} alt="" />
                 <h4 className="uppercase text-lg tablet:text-xl mobile:text-center tablet:text-start  font-bold text-white">
                   classic
                 </h4>
               </div>
-              <div className="bg-gradient-to-tr from-[#3F3B5B] via-[#2A2742] to-[#2A2742] lg:h-60 tablet:w-96 mobile:w-44 lg-laptop:w-[30rem] h-56  duration-500 group-hover:blur-sm hover:!blur-none group-hover:scale-[0.85] hover:!scale-100 cursor-pointer p-8 rounded-[46px] group-hover:mix-blend-luminosity hover:!mix-blend-normal shadow-2xl">
-                <img className="mx-auto w-40 lg-laptop:-mt-14 -mt-7 tablet:w-36 laptop:w-40 mobile:mb-8 tablet:mb-0" src={Astronaut} alt="" />
+              <div className="bg-gradient-to-tr from-[#3F3B5B] via-[#2A2742] to-[#2A2742] lg:h-60 tablet:w-96 mobile:w-44 lg-laptop:w-[30rem] lg-laptop:h-72 h-56  duration-500 group-hover:blur-sm hover:!blur-none group-hover:scale-[0.85] hover:!scale-100 cursor-pointer p-8 rounded-[46px] group-hover:mix-blend-luminosity hover:!mix-blend-normal shadow-2xl">
+                <img className="mx-auto w-40 lg-laptop:-mt-24 -mt-7 tablet:w-36 lg-laptop:w-60 laptop:w-40 mobile:mb-8 tablet:mb-0" src={Astronaut} alt="" />
                 <span className="uppercase text-lg tablet:text-2xl font-bold mobile:text-center tablet:text-start text-white ml-3">
                   BOT
                 </span>
               </div>
-              <div className=" bg-gradient-to-tr from-[#3F3B5B] via-[#2A2742] to-[#2A2742] lg:h-60 tablet:w-96 mobile:w-44 lg-laptop:w-[30rem] h-56  duration-500 group-hover:blur-sm hover:!blur-none group-hover:scale-[0.85] hover:!scale-100 cursor-pointer p-8 rounded-[46px] group-hover:mix-blend-luminosity hover:!mix-blend-normal shadow-2xl">
+              <div className=" bg-gradient-to-tr from-[#3F3B5B] via-[#2A2742] to-[#2A2742] lg:h-60 tablet:w-96 mobile:w-44 lg-laptop:w-[30rem]  h-56 lg-laptop:h-72 duration-500 group-hover:blur-sm hover:!blur-none group-hover:scale-[0.85] hover:!scale-100 cursor-pointer p-8 rounded-[46px] group-hover:mix-blend-luminosity hover:!mix-blend-normal shadow-2xl">
                 <img className="mx-auto lg-laptop:-mt-14 tablet:-mt-5 mobile:mb-8 tablet:mb-0 lg-laptop:mb-5" src={Rakets} alt="" />
                 <h4 className="uppercase text-lg tablet:text-2xl font-bold mobile:text-center tablet:text-start text-white">
                   Random palyer

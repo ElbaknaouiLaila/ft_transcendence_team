@@ -35,12 +35,12 @@ function AccountOwner( { user }: AccountOwnerProps ) {
     // }
   }
   return (
-    <div className="bg-[#3f3b5b91] min-w-screen rounded-3xl mb-11 shadow-2xl">
+    <div className="bg-[#3f3b5b91] min-w-screen lg-laptop:w-[70%]  lg-laptop:mt-16 rounded-3xl mb-11 shadow-2xl">
       {user.map((data) => {
         return (
           <div className="dark:!bg-navy-800 shadow-shadow-500 mb-5 shadow-3xl flex justify-center rounded-primary relative mx-auto  h-full w-full max-w-[90rem] flex-col items-center bg-cover bg-clip-border p-[16px] dark:text-white dark:shadow-none">
             <div
-              className="relative flex h-60 w-full md:w-[35rem] lg-laptop:w-[86rem] justify-center items-end rounded-3xl bg-cover -mt-3 shadow-lg"
+              className="relative flex h-72 w-full md:w-[35rem] lg-laptop:w-[120rem] justify-center items-end rounded-3xl bg-cover -mt-3 shadow-lg"
               title="object-center"
               style={{
                 // backgroundImage: 'url("https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/bca2fa29-36c0-4b87-aa20-6848ad75c66b/d62n5by-9ef8ff16-8b2d-41c6-849f-093129d3ac3a.jpg/v1/fill/w_1203,h_664,q_70,strp/mercenaries_by_real_sonkes_d62n5by-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9ODgzIiwicGF0aCI6IlwvZlwvYmNhMmZhMjktMzZjMC00Yjg3LWFhMjAtNjg0OGFkNzVjNjZiXC9kNjJuNWJ5LTllZjhmZjE2LThiMmQtNDFjNi04NDlmLTA5MzEyOWQzYWMzYS5qcGciLCJ3aWR0aCI6Ijw9MTYwMCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.cj4Pf9CSyiVk-cjTsZKAeHUcLPPKP6h-el1mMuLDJmo")',
@@ -50,7 +50,7 @@ function AccountOwner( { user }: AccountOwnerProps ) {
               <div className=" flex h-[98px] w-[98px] items-center -m-11 justify-center rounded-full border-[4px] border-white bg-slate-400">
                 <img
                   className="h-full w-full rounded-full "
-                  src={"data"}
+                  src={data.avatar}
                   alt=""
                 />
               </div>

@@ -87,7 +87,7 @@ function MaincontentProfile() {
               </div>
               <div className="  w-full px-4  mt-5">
                 <div className=" flex justify-center items-center mb-8 w-full">
-                  <div className="bg-light relative flex h-7 w-full  max-w-3xl rounded-2xl bg-slate-300">
+                  <div className="bg-light relative flex h-9 w-full  max-w-7xl  rounded-2xl bg-slate-300">
                     <div className="bg-[#ce502ad3] absolute top-0 left-0 flex h-full w-[90%] items-center justify-center rounded-2xl text-xs font-semibold text-white">
                       90%
                     </div>
@@ -113,7 +113,7 @@ function MaincontentProfile() {
                 initial="hidden"
                 whileInView={"show"}
                 viewport={{ once: false, amount: 0.7 }}
-                className="flex-1 p-4 tablet:min-w-[60vh]  lg-laptop:px-2 bg-[#3f3b5b91] rounded-3xl mobile:h-3/4  lg-laptop:mt-9 lg-laptop:min-w-[30%] lg-laptop:h-full tablet:w-2/5 lg-laptop:w-1/5 laptop:mb-10 shadow-2xl justify-center mobile:items-center"
+                className="flex-1 p-4 tablet:min-w-[60vh]  lg-laptop:px-2 bg-[#3f3b5b91] rounded-3xl mobile:h-3/4  lg-laptop:mt-9 lg-laptop:min-w-[60%] lg-laptop:h-full tablet:w-2/5 lg-laptop:w-1/5 laptop:mb-10 shadow-2xl justify-center mobile:items-center"
               >
                 {/* <div className="flex-1 justify-center items-center p-4 ml-4 laptop:ml-20"> */}
                   <div className="flex justify-center items-center text-white -mt-3 text-2xl  laptop:text-4xl font-PalanquinDark">
@@ -135,7 +135,7 @@ function MaincontentProfile() {
                 initial="hidden"
                 whileInView={"show"}
                 viewport={{ once: false, amount: 0.7 }}
-                className="flex-1 p-4 rounded-3xl tablet:min-w-[60vh] tablet:w-4/5 tablet:mt-10 tablet:mb-10 lg-laptop:w-1/2 bg-[#3f3b5b91] laptop:mb-20  shadow-2xl mx-2 lg-laptop:min-w-[70%]  md:mx-10 justify-center "
+                className="flex-1 p-4 rounded-3xl tablet:min-w-[60vh] tablet:w-4/5 tablet:mt-10 tablet:mb-10 lg-laptop:w-1/2 bg-[#3f3b5b91] laptop:mb-20  shadow-2xl mx-2 lg-laptop:min-w-[80%]  md:mx-10 justify-center "
               >
                 <div className="text-white flex text-center justify-center font-PalanquinDark text-2xl  tablet:text-4xl mb-5">
                   Game History
@@ -155,7 +155,7 @@ function MaincontentProfile() {
                 initial="hidden"
                 whileInView={"show"}
                 viewport={{ once: false, amount: 0.7 }}
-                className="flex-1 p-4 bg-[#3f3b5b91] rounded-3xl tablet:min-w-[60vh]  tablet:w-4/5 lg-laptop:w-1/2 shadow-2xl mx-2 md:mx-10 md:mb-9 laptop:mt-20 lg-laptop:mt-0 lg:mb-0 justify-center items-center lg-laptop:min-w-[70%]"
+                className="flex-1 p-4 bg-[#3f3b5b91] rounded-3xl tablet:min-w-[60vh]  tablet:w-4/5 lg-laptop:w-1/2 shadow-2xl mx-2 md:mx-10 md:mb-9 laptop:mt-20 lg-laptop:mt-0 lg:mb-0 justify-center items-center lg-laptop:min-w-[80%]"
               >
                   <div className=" text-white flex justify-center items-center  text-2xl  tablet:text-4xl font-PalanquinDark">
                     Achievements

@@ -38,11 +38,12 @@ const ProfileCardUser: React.FC = () => {
     fetchData();
   }, []);
   const friendInfo = user.find((friend) => friend.id_user === friendIdNumber);
-
+  console.log(friendIdNumber);
   return (
-    <main className=" overflow-scroll resultUserContainer flex flex-col w-full  overflow-y-auto mb-14">
-      <div className="flex w-full mx-auto pr-5 lg:px-6 py-8 ">
-        <div className="flex flex-col w-full h-full text-gray-900 text-xl ">
+    <main className=" overflow-scroll resultUserContainer flex justify-center items-center flex-col w-[90%]  overflow-y-auto  mb-14">
+          <div className="flex text-white text-7xl font-PalanquinDark">Profile {friendInfo?.name}</div>
+      <div className="flex  items-center justify-center w-full mx-auto pr-5 lg:px-6 py-8 ">
+        <div className="flex flex-col w-2/3 h-full text-gray-900 shadow-2xl bg-[#3f3b5b91] py-16 text-xl rounded-3xl ">
           <motion.div
             variants={fadeIn("down", 0.2)}
             initial="hidden"
@@ -51,7 +52,69 @@ const ProfileCardUser: React.FC = () => {
             className="flex md:flex-row flex-col w-full justify-center h-full text-gray-900 text-xl "
           >
             {/* <AccountOwner user={friendInfo} /> */}
-            <div className="bg-[#3f3b5b91] min-w-screen rounded-3xl mb-11 shadow-2xl">
+            <div className="dark:!bg-navy-800 shadow-shadow-500 mb-5 shadow-3xl flex justify-center rounded-primary relative mx-auto  h-full w-full max-w-[90rem] flex-col items-center bg-cover bg-clip-border p-[16px] dark:text-white dark:shadow-none">
+            <div
+              className="relative flex h-60 w-full md:w-[35rem] lg-laptop:w-[86rem] justify-center items-end rounded-3xl bg-cover -mt-3 shadow-lg"
+              title="object-center"
+              style={{
+                // backgroundImage: 'url("https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/bca2fa29-36c0-4b87-aa20-6848ad75c66b/d62n5by-9ef8ff16-8b2d-41c6-849f-093129d3ac3a.jpg/v1/fill/w_1203,h_664,q_70,strp/mercenaries_by_real_sonkes_d62n5by-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9ODgzIiwicGF0aCI6IlwvZlwvYmNhMmZhMjktMzZjMC00Yjg3LWFhMjAtNjg0OGFkNzVjNjZiXC9kNjJuNWJ5LTllZjhmZjE2LThiMmQtNDFjNi04NDlmLTA5MzEyOWQzYWMzYS5qcGciLCJ3aWR0aCI6Ijw9MTYwMCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.cj4Pf9CSyiVk-cjTsZKAeHUcLPPKP6h-el1mMuLDJmo")',
+                backgroundImage: `url(${Cover})`,
+              }}
+            >
+              <div className=" flex h-[98px] w-[98px] items-center -m-11 justify-center rounded-full border-[4px] border-white bg-slate-400">
+                <img
+                  className="h-full w-full rounded-full "
+                  src={friendInfo?.avatar}
+                  alt=""
+                />
+              </div>
+            </div>
+            {/* <div className="flex mt-16 justify-between items-center w-full">
+              <div>first</div>
+              <div>second</div>
+              <div>therd</div> */}
+            <div
+              className=" flex  w-full lg-laptop:flex-row  mt-10  justify-between 
+             flex-col-reverse "
+            >
+              <div className=" mt-4 flex flex-col md:!gap-14 justify-center tablet:flex-row ">
+                <div className="flex flex-col items-center justify-center ">
+                  <h3 className="text-white text-lg tablet:text-2xl font-bold">
+                    {155}
+                  </h3>
+                  <p className="text-[#A3AED0] text-sm font-normal w-24 ">
+                    Games Played
+                  </p>
+                </div>
+                <div className="flex flex-col items-center justify-center">
+                  <h3 className="text-white text-lg tablet:text-2xl font-bold">{64} %</h3>
+                  <p className="text-[#A3AED0] text-sm font-normal">Win</p>
+                </div>
+                <div className="flex flex-col items-center justify-center">
+                  <h3 className="text-white text-lg tablet:text-2xl font-bold">{45} %</h3>
+                  <p className="text-[#A3AED0] text-sm font-normal">Loss</p>
+                </div>
+              </div>
+              <div className="flex flex-row justify-center items-center ">
+                <h4 className="text-white mobile:text-2xl tablet:text-4xl flex-row font-bold lg:mt-4 mt-0 lg-laptop:-ml-80">
+                {friendInfo?.name}
+                </h4>
+
+                {/* <MdModeEditOutline className=" w-6 flex items-center justify-center mx-2 text-gray-400" onClick={()=>toggleUserName(data.id_user, data.name)}/> */}
+              </div>
+              <div className="flex justify-center mt-4 md:mt-4">
+                {/* <button className="bg-gradient-to-br from-[#fe764dd3] to-[#ce502ad3] rounded-2xl px-3 mx-4 shadow-2xl">
+                  Edit Profile Photo
+                </button> */}
+                {/* <button className="bg-gradient-to-br from-[#fe764dd3] to-[#ce502ad3] font-semibold rounded-2xl px-3 text-white shadow-2xl hidden lg-laptop:block">
+                  Add Friend +
+                </button> */}
+              </div>
+            </div>
+          </div>
+
+
+            {/* <div className="bg-[#3f3b5b91] min-w-screen rounded-3xl mb-11 shadow-2xl">
               <div className="dark:!bg-navy-800 shadow-shadow-500 mb-5 shadow-3xl flex justify-center rounded-primary relative mx-auto  h-full w-full max-w-[90rem] flex-col items-center bg-cover bg-clip-border p-[16px] dark:text-white dark:shadow-none">
                 <div
                   className="relative flex h-60 w-full md:w-[35rem] lg:w-[86rem] justify-center items-end rounded-3xl bg-cover -mt-3 shadow-lg"
@@ -76,7 +139,7 @@ const ProfileCardUser: React.FC = () => {
                   <div className="mt-4 flex md:!gap-14 -mr-48">
                     <div className="flex flex-col items-center justify-center">
                       <h3 className="text-white text-2xl font-bold">
-                        {/* {friendInfo?.GamesPlayed} */}456
+                        {friendInfo?.GamesPlayed}
                       </h3>
                       <p className="text-[#A3AED0] text-sm font-normal w-24">
                         Games Played
@@ -84,13 +147,13 @@ const ProfileCardUser: React.FC = () => {
                     </div>
                     <div className="flex flex-col items-center justify-center">
                       <h3 className="text-white text-2xl font-bold">
-                        {/* {friendInfo?.Win} */}112
+                        {friendInfo?.Win}
                       </h3>
                       <p className="text-[#A3AED0] text-sm font-normal">Win</p>
                     </div>
                     <div className="flex flex-col items-center justify-center">
                       <h3 className="text-white text-2xl font-bold">
-                        {/* {friendInfo?.Loss} */}12
+                        {friendInfo?.Loss}
                       </h3>
                       <p className="text-[#A3AED0] text-sm font-normal">Loss</p>
                     </div>
@@ -112,7 +175,7 @@ const ProfileCardUser: React.FC = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </motion.div>
           <div className="flex flex-col items-center  w-full ">
           <motion.div 
