@@ -12,14 +12,18 @@ export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect{
 
   handleConnection(client: Socket): any {
     // Handle new client connection
-    const cookieHeader = client.handshake.headers.cookies; // Get the entire cookie header as a string
+    // console.log(client);
+    let cookieHeader : string  = '';
+    cookieHeader = client.handshake.headers.cookies.toString(); // Get the entire cookie header as a string
     // // You can now parse and manipulate the cookie data as needed
-    // const cookies = cookieHeader.split(';').reduce((acc, cookie) => {
-    //   const [name, value] = cookie.trim().split('=');
-    //   acc[name] = value;
-    //   return acc;
-    // }, {});
-    console.log(cookieHeader);
+    const cookies = cookieHeader.split(';').reduce((acc, cookie) => {
+      const [name, value] = cookie.trim().split('=');
+      acc[name] = value;
+      return acc;
+    }, {});
+
+    // console.log(cookies['cookie']);
+    // console.log(this.jwt.verify(cookies['cookie']));
     // Access a specific cookie
     // const specificCookie = cookies['cookie'];
     // const decoded = this.jwt.verify(specificCookie);
@@ -35,11 +39,11 @@ export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect{
   handleUserOnline(client: Socket, payload: any) {
     // Handle when a user comes online
   }
-  
+
   @SubscribeMessage('userOffline')
   handleUserOffline(client: Socket, payload: any, @Headers() header) {
-    // console.log('lawaaal');
-    this.handleConnection(client);
+    console.log(client);
+    // this.handleConnection(client);
     // console.log(decoded);
     // console.log('lawaaal');
     // return (decoded);

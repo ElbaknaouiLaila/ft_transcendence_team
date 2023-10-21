@@ -22,16 +22,20 @@ let SocketGateway = class SocketGateway {
         this.jwt = jwt;
     }
     handleConnection(client) {
-        const cookieHeader = client.handshake.headers.cookies;
-        const code = cookieHeader;
-        console.log(code);
+        let cookieHeader = '';
+        cookieHeader = client.handshake.headers.cookies.toString();
+        const cookies = cookieHeader.split(';').reduce((acc, cookie) => {
+            const [name, value] = cookie.trim().split('=');
+            acc[name] = value;
+            return acc;
+        }, {});
     }
     handleDisconnect(client) {
     }
     handleUserOnline(client, payload) {
     }
     handleUserOffline(client, payload, header) {
-        this.handleConnection(client);
+        console.log(client);
     }
     handleMessage(body) {
         console.log(body);
