@@ -11,6 +11,7 @@ async function bootstrap() {
         whitelist: true,
     }));
     app.use(cookieParser());
+    console.log('heere');
     app.use(cors({
         origin: 'http://localhost:3001',
     }));

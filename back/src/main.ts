@@ -29,6 +29,7 @@ async function bootstrap() {
 
   // app.use(passport.initialize());
   // app.use(passport.session());
+  console.log('heere');
   app.use(cors({
     origin: 'http://localhost:3001', // Replace with the domain of your frontend
     
