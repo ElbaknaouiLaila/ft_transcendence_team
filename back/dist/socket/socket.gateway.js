@@ -13,15 +13,16 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SocketGateway = void 0;
-const common_1 = require("@nestjs/common");
 const websockets_1 = require("@nestjs/websockets");
 const socket_io_1 = require("socket.io");
 const jwtservice_service_1 = require("../jwt/jwtservice.service");
+const prisma_service_1 = require("../prisma/prisma.service");
 let SocketGateway = class SocketGateway {
-    constructor(jwt) {
+    constructor(jwt, prisma) {
         this.jwt = jwt;
+        this.prisma = prisma;
     }
-    handleConnection(client) {
+    decodeCookie(client) {
         let cookieHeader = '';
         cookieHeader = client.handshake.headers.cookies.toString();
         const cookies = cookieHeader.split(';').reduce((acc, cookie) => {
@@ -29,13 +30,36 @@ let SocketGateway = class SocketGateway {
             acc[name] = value;
             return acc;
         }, {});
+        const specificCookie = cookies['cookie'];
+        const decoded = this.jwt.verify(specificCookie);
+        return (decoded);
     }
-    handleDisconnect(client) {
+    async handleConnection(client) {
+        console.log('client ' + client.id + ' has conected');
+        const decoded = this.decodeCookie(client);
+        const user = await this.prisma.user.update({
+            where: { id_user: decoded.id },
+            data: {
+                status_user: "online",
+            },
+        });
+        console.log(user);
     }
-    handleUserOnline(client, payload) {
+    async handleDisconnect(client) {
+        console.log('client ' + client.id + ' has disconnected');
+        const decoded = this.decodeCookie(client);
+        const user = await this.prisma.user.update({
+            where: { id_user: decoded.id },
+            data: {
+                status_user: "offline",
+            },
+        });
+        console.log(user);
     }
-    handleUserOffline(client, payload, header) {
-        console.log(client);
+    handleUserOnline(client) {
+        this.handleConnection(client);
+    }
+    handleUserOffline(client) {
     }
     handleMessage(body) {
         console.log(body);
@@ -50,14 +74,13 @@ __decorate([
 __decorate([
     (0, websockets_1.SubscribeMessage)('userOnline'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [socket_io_1.Socket, Object]),
+    __metadata("design:paramtypes", [socket_io_1.Socket]),
     __metadata("design:returntype", void 0)
 ], SocketGateway.prototype, "handleUserOnline", null);
 __decorate([
     (0, websockets_1.SubscribeMessage)('userOffline'),
-    __param(2, (0, common_1.Headers)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [socket_io_1.Socket, Object, Object]),
+    __metadata("design:paramtypes", [socket_io_1.Socket]),
     __metadata("design:returntype", void 0)
 ], SocketGateway.prototype, "handleUserOffline", null);
 __decorate([
@@ -69,6 +92,6 @@ __decorate([
 ], SocketGateway.prototype, "handleMessage", null);
 exports.SocketGateway = SocketGateway = __decorate([
     (0, websockets_1.WebSocketGateway)(),
-    __metadata("design:paramtypes", [jwtservice_service_1.JwtService])
+    __metadata("design:paramtypes", [jwtservice_service_1.JwtService, prisma_service_1.PrismaService])
 ], SocketGateway);
 //# sourceMappingURL=socket.gateway.js.map
