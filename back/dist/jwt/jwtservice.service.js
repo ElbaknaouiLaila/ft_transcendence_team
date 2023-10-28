@@ -32,7 +32,7 @@ let JwtService = class JwtService extends (0, passport_1.PassportStrategy)(passp
         };
     }
     sign(payload) {
-        return jwt.sign(payload, this.secretKey, { expiresIn: '6h' });
+        return jwt.sign(payload, this.secretKey, { expiresIn: '1m' });
     }
     verify(token) {
         console.log('nooot here');
