@@ -10,46 +10,27 @@ export class JwtAuthGuard implements CanActivate {
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
         const request = context.switchToHttp().getRequest();
+        const response = context.switchToHttp().getResponse();
 
         // Extract the JWT token from cookies
-        const token = request.cookies.cookie; // Replace 'jwt' with the name of your JWT cookie
+        const token = request.cookies.cookie;
 
         if (!token) {
-            return false; // No JWT cookie found
+            response.send("false").status(401);
+            return false;
         }
 
         try {
             const decoded = this.JwtService.verify(token);
             console.log(decoded);
             if (!decoded){
-                const response = context.switchToHttp().getResponse();
-                response.redirect('http://localhost:3000/auth/login/42/redirect').status();
-                return true;
+                response.send("false").status(401);
+                return false;
             }
-            const id_user = decoded.id;
-            const find = await this.prisma.user.findUnique({
-                where: {id_user},
-            });
-
-            // if (find.TwoFactor){
-
-            // }
-
-            // You can also add logic to check if the token is still valid (e.g., token expiration)
-            // const tokenIsValid = this.isTokenNotExpired(decoded.exp); // Replace with your token validation logic
-
-            // if (!tokenIsValid) {
-            //     return false; // Token is not valid
-            // }
-
-            // If the token is valid and the user exists, attach the user or token payload to the request for further processing.
-            request.user = decoded;
 
             return true;
         } catch (error) {
-            // console.log(error);
             console.log('falsyyyyyy');
-            // Handle token verification errors (e.g., expired or invalid tokens).
             return false;
         }
     }

@@ -28,7 +28,7 @@ export class JwtService extends PassportStrategy(Strategy, 'jwt') {
     private readonly secretKey = 'asddfsdf5456dsf45ds';
 
     sign(payload: User) {
-        return jwt.sign(payload, this.secretKey, { expiresIn: '6h'}); // Adjust expiration as needed
+        return jwt.sign(payload, this.secretKey, { expiresIn: '1m'}); // Adjust expiration as needed
     }
 
     verify(token: string): any {
